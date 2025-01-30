@@ -13,7 +13,7 @@ namespace ChemistryBasics
     public partial class InitSettingsPanel : UserControl
     {
 
-        string[] strModeNames = { "元素符号检测", "化学式检测", "化学方程式检测" };
+        string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼"};
 
         public InitSettingsPanel(int mode)
         {

@@ -234,6 +234,7 @@
             txtAnswer.TabIndex = 4;
             txtAnswer.TextAlignment = ContentAlignment.MiddleCenter;
             txtAnswer.Watermark = "";
+            txtAnswer.KeyPress += txtAnswer_KeyPress;
             // 
             // lbl4
             // 
@@ -248,12 +249,12 @@
             lbl4.Text = "答案";
             lbl4.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // ElementModePanel
+            // GamePanel
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlElementMode);
-            Name = "ElementModePanel";
+            Name = "GamePanel";
             Size = new Size(1000, 1000);
             Load += ElementModePanel_Load;
             tblpnlElementMode.ResumeLayout(false);

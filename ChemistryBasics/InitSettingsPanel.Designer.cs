@@ -106,7 +106,7 @@
             // 
             lblMode.AutoSize = true;
             lblMode.Dock = DockStyle.Fill;
-            lblMode.Font = new Font("Microsoft YaHei UI", 12F);
+            lblMode.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 134);
             lblMode.Location = new Point(3, 0);
             lblMode.Name = "lblMode";
             lblMode.Size = new Size(1094, 70);
