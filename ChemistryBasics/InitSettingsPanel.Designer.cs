@@ -76,6 +76,7 @@
             // lbl1
             // 
             lbl1.AutoSize = true;
+            lbl1.BackColor = SystemColors.ButtonFace;
             lbl1.Dock = DockStyle.Fill;
             lbl1.Font = new Font("Microsoft YaHei UI", 12F);
             lbl1.Location = new Point(3, 0);
@@ -105,6 +106,7 @@
             // lblMode
             // 
             lblMode.AutoSize = true;
+            lblMode.BackColor = SystemColors.ButtonFace;
             lblMode.Dock = DockStyle.Fill;
             lblMode.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 134);
             lblMode.Location = new Point(3, 0);
@@ -129,6 +131,7 @@
             // 
             // rtxtAlert
             // 
+            rtxtAlert.BorderStyle = BorderStyle.None;
             rtxtAlert.Dock = DockStyle.Fill;
             rtxtAlert.Location = new Point(3, 73);
             rtxtAlert.Name = "rtxtAlert";

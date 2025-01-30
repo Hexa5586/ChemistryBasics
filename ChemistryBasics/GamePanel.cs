@@ -17,6 +17,8 @@ namespace ChemistryBasics
         private int intTotalProblemCnt = 0, intFinishedProblemCnt = 0, intCorrectProblemCnt = 0;
         private string strQuestion = "", strCorrectAnswer = "";
         private int mode;
+        private int btnSubmitCounter = 0;
+        private string[] btnSubmitDisplay = { "确认", "下一题" };
 
         public GamePanel()
         {
@@ -40,20 +42,23 @@ namespace ChemistryBasics
                 //TODO
                 BtnSubmitClick(sender, e);
             }
+            this.btnSubmit.Text = btnSubmitDisplay[(++btnSubmitCounter) % 2];
+
+            FocusOnTextBox();
         }
-        
+
         private void txtAnswer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(this.Mode == 1)
+            if (this.Mode == 1)
             {
-                if(e.KeyChar >= '0' && e.KeyChar <= '9')
+                if (e.KeyChar >= '0' && e.KeyChar <= '9')
                 {
                     e.Handled = true;
-                    this.txtAnswer.Text += (char)(e.KeyChar - '0' + '\u2080');
-                    this.txtAnswer.SelectionStart = this.txtAnswer.Text.Length;
-                    this.txtAnswer.SelectionLength = 0;
+                    int insert_index = this.txtAnswer.SelectionStart;
+                    this.txtAnswer.Text = this.txtAnswer.Text.Insert(insert_index, "" + (char)(e.KeyChar - '0' + '\u2080'));
+                    this.txtAnswer.SelectionStart = insert_index + 1;
                 }
-                
+
             }
         }
 
@@ -62,6 +67,11 @@ namespace ChemistryBasics
             intTime = intTotalProblemCnt = intFinishedProblemCnt = intCorrectProblemCnt = 0;
             strQuestion = strCorrectAnswer = "";
             txtAnswer.Text = lblQuestion.Text = "";
+        }
+
+        public void FocusOnTextBox()
+        {
+            this.txtAnswer.Focus();
         }
 
         public void SetAnswerStatus(int status)
@@ -93,7 +103,36 @@ namespace ChemistryBasics
 
         public bool IsAnswerCorrect()
         {
-             return this.strCorrectAnswer.Trim() == this.txtAnswer.Text.Trim();
+            return this.strCorrectAnswer.Trim() == this.txtAnswer.Text.Trim();
+        }
+
+        public string GetCurrentAccuracy()
+        {
+            if (intFinishedProblemCnt == 0)
+            {
+                return "100.00%";
+            }
+            double accuracy = intCorrectProblemCnt * 100.0 / intFinishedProblemCnt;
+            return accuracy.ToString("F2") + "%";
+        }
+
+        private void txtAnswer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+            {
+                if (BtnSubmitClick != null)
+                {
+                    BtnSubmitClick(sender, e);
+                }
+                FocusOnTextBox();
+            }
+        }
+
+        private void GamePanel_Resize(object sender, EventArgs e)
+        {
+            this.lblQuestion.Font = new Font(this.lblQuestion.Font.FontFamily, (float)(this.tblpnlQuestion.Height * 1.0 / 96 * 18));
+            this.txtAnswer.Font = new Font(this.txtAnswer.Font.FontFamily, (float)(this.tblpnlAnswer.Height * 1.0 / 96 * 16));
+            this.txtAnswer.Height = (int)(this.tblpnlAnswer.Height);
         }
 
         [Browsable(true)]
@@ -180,9 +219,8 @@ namespace ChemistryBasics
             set
             {
                 intFinishedProblemCnt = value;
-                double accuracy = intCorrectProblemCnt * 100.0 / intFinishedProblemCnt;
-                this.lblProgress.Text = (intFinishedProblemCnt + 1).ToString() + "/" + intTotalProblemCnt.ToString();
-                this.lblAccuracy.Text = accuracy.ToString("F2") + "%";
+                this.lblProgress.Text = (intFinishedProblemCnt).ToString() + "/" + intTotalProblemCnt.ToString();
+                this.lblAccuracy.Text = this.GetCurrentAccuracy();
             }
         }
 

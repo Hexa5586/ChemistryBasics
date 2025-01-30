@@ -20,8 +20,8 @@ namespace ChemistryBasics
                                                          new Dictionary<string, string>()};
         private string[] strAlerts =
         {
-            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs25 \par \b  说明： \b0 \par  1. 请根据给定的元素中文名称写出对应的元素符号；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案。}",
-            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs25 \par \b  说明： \b0 \par  1. 请根据给定的物质中文名称写出对应的化学式（有机物的要求会特别注明）；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案；\par  3. 数字 \cf2 \b 直接输入 \b0 \cf0 即可，会自动转换为下标形式；\par  4.请使用 \cf1 \b 英文输入法 \b0 \cf0 ，使用中文符号会导致判错。}",
+            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的元素中文名称写出对应的元素符号；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案。}",
+            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的物质中文名称写出对应的化学式（有机物的要求会特别注明）；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案；\par  3. 数字 \cf2 \b 直接输入 \b0 \cf0 即可，会自动转换为下标形式；\par  4.请使用 \cf1 \b 英文输入法 \b0 \cf0 ，使用中文符号会导致判错。}",
         };
 
 
@@ -46,6 +46,7 @@ namespace ChemistryBasics
             txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
             btnElementSave.Enabled = false;
             btnFormulaSave.Enabled = false;
+            this.main_Resize(sender, e);
         }
 
         private void ReadQnAData()
@@ -145,6 +146,7 @@ namespace ChemistryBasics
             }
 
             GameInit(totalProblemCnt);
+
         }
 
         private void GameInit(int totalProblemCnt)
@@ -167,11 +169,12 @@ namespace ChemistryBasics
             ActivePanel.FinishedProblemCount = 0;
             ActivePanel.QuestionString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Key;
             ActivePanel.CorrectAnswerString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Value;
-
+            ActivePanel.FocusOnTextBox();
         }
         private void GamePanel_BtnSubmitClick(object sender, EventArgs e)
         {
-            if ((++btnSubmitCounter) % 2 == 1) { 
+            if ((++btnSubmitCounter) % 2 == 1)
+            {
                 if (ActivePanel == null)
                 {
                     MessageBox.Show("当前没有正在运行的GamePanel.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -187,20 +190,21 @@ namespace ChemistryBasics
                 {
                     ActivePanel.SetAnswerStatus(-1);
                 }
+
+                ActivePanel.FinishedProblemCount++;
             }
             else
             {
-                ActivePanel.FinishedProblemCount++;
                 ActivePanel.SetAnswerStatus(0);
 
                 if (ActivePanel.FinishedProblemCount >= ActivePanel.TotalProblemCount)
                 {
                     tbctrlMain.Hide();
-                    double accuracy = ActivePanel.CorrectAnswerCount * 100.0 / ActivePanel.TotalProblemCount;
-                    MessageBox.Show("正确率：" + accuracy.ToString("F2") + "%");
+                    MessageBox.Show("正确率：" + ActivePanel.GetCurrentAccuracy());
                     if (ActivePanel != null)
                     {
                         ActivePanel.Reset();
+                        btnSubmitCounter = 0;
                     }
                     ActivePanel = null;
                     return;
@@ -210,22 +214,23 @@ namespace ChemistryBasics
                 ActivePanel.CorrectAnswerString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Value;
             }
 
-            
+
         }
 
         private void TabButton_Click(object sender, EventArgs e)
         {
-            if(ActiveInitPanel != null)
+            if (ActiveInitPanel != null)
             {
                 ActiveInitPanel.Dispose();
+                //MessageBox.Show("Disposed.");
                 ActiveInitPanel = null;
             }
 
             UIButton? clickedBtn = sender as UIButton;
             if (clickedBtn != null)
             {
-                tbctrlMain.Show();
                 tbctrlMain.SelectTab(clickedBtn.TabIndex);
+                tbctrlMain.Show();
                 int mode = tbctrlMain.SelectedIndex;
 
                 foreach (Control con in tbpnlTab.Controls)
@@ -247,6 +252,7 @@ namespace ChemistryBasics
                 if (mode != 2)
                 {
                     InitSettingsPanel initpnl = new InitSettingsPanel(mode);
+                    ActiveInitPanel = initpnl;
                     tbctrlMain.TabPages[mode].Controls.Add(initpnl);
                     initpnl.Dock = DockStyle.Fill;
                     initpnl.AlertString = strAlerts[mode];
@@ -294,6 +300,17 @@ namespace ChemistryBasics
                 ReadQnAData();
                 txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
                 btnFormulaSave.Enabled = false;
+            }
+        }
+
+        private void main_Resize(object sender, EventArgs e)
+        {
+            foreach (Control con in tbpnlTab.Controls)
+            {
+                if (con != null && con.GetType() == typeof(UIButton))
+                {
+                    con.Font = new Font(con.Font.FontFamily, (float)(con.Height * 1.0 / 96 * 11), con.Font.Style);
+                }
             }
         }
     }

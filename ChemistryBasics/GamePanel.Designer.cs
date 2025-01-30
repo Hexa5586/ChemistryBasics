@@ -222,18 +222,19 @@
             // txtAnswer
             // 
             txtAnswer.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtAnswer.Font = new Font("Consolas", 48F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtAnswer.Location = new Point(4, 194);
+            txtAnswer.Font = new Font("Calibri", 60F, FontStyle.Bold);
+            txtAnswer.Location = new Point(4, 145);
             txtAnswer.Margin = new Padding(4, 5, 4, 5);
             txtAnswer.MinimumSize = new Size(1, 16);
             txtAnswer.Name = "txtAnswer";
             txtAnswer.Padding = new Padding(1);
             txtAnswer.RectSides = ToolStripStatusLabelBorderSides.None;
             txtAnswer.ShowText = false;
-            txtAnswer.Size = new Size(986, 193);
+            txtAnswer.Size = new Size(986, 290);
             txtAnswer.TabIndex = 4;
             txtAnswer.TextAlignment = ContentAlignment.MiddleCenter;
             txtAnswer.Watermark = "";
+            txtAnswer.KeyDown += txtAnswer_KeyDown;
             txtAnswer.KeyPress += txtAnswer_KeyPress;
             // 
             // lbl4
@@ -257,6 +258,7 @@
             Name = "GamePanel";
             Size = new Size(1000, 1000);
             Load += ElementModePanel_Load;
+            Resize += GamePanel_Resize;
             tblpnlElementMode.ResumeLayout(false);
             tblpnlStatus.ResumeLayout(false);
             tblpnlStatus.PerformLayout();

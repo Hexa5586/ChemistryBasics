@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
             tbpnlMain = new TableLayoutPanel();
             tbpnlTab = new TableLayoutPanel();
             btnElementMode = new Sunny.UI.UIButton();
             btnFormulaMode = new Sunny.UI.UIButton();
             btnSettings = new Sunny.UI.UIButton();
+            pictureBox1 = new PictureBox();
             tbctrlMain = new TabControl();
             tbpElementMode = new TabPage();
             ElementPanel = new GamePanel();
@@ -53,6 +55,7 @@
             tbpAbout = new TabPage();
             tbpnlMain.SuspendLayout();
             tbpnlTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tbctrlMain.SuspendLayout();
             tbpElementMode.SuspendLayout();
             tbpFormulaMode.SuspendLayout();
@@ -67,8 +70,8 @@
             // tbpnlMain
             // 
             tbpnlMain.ColumnCount = 2;
-            tbpnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tbpnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tbpnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tbpnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75F));
             tbpnlMain.Controls.Add(tbpnlTab, 0, 0);
             tbpnlMain.Controls.Add(tbctrlMain, 1, 0);
             tbpnlMain.Dock = DockStyle.Fill;
@@ -81,21 +84,24 @@
             // 
             // tbpnlTab
             // 
-            tbpnlTab.BackColor = SystemColors.ButtonFace;
+            tbpnlTab.BackColor = Color.FromArgb(220, 220, 240);
             tbpnlTab.ColumnCount = 1;
             tbpnlTab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tbpnlTab.Controls.Add(btnElementMode, 0, 0);
             tbpnlTab.Controls.Add(btnFormulaMode, 0, 1);
             tbpnlTab.Controls.Add(btnSettings, 0, 2);
+            tbpnlTab.Controls.Add(pictureBox1, 0, 4);
             tbpnlTab.Dock = DockStyle.Fill;
             tbpnlTab.Location = new Point(3, 3);
             tbpnlTab.Name = "tbpnlTab";
-            tbpnlTab.RowCount = 4;
-            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tbpnlTab.RowStyles.Add(new RowStyle());
-            tbpnlTab.Size = new Size(243, 942);
+            tbpnlTab.RowCount = 6;
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 15.247818F));
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 15.247817F));
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 15.247817F));
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 26.0998688F));
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 26.0998688F));
+            tbpnlTab.RowStyles.Add(new RowStyle(SizeType.Percent, 2.0568068F));
+            tbpnlTab.Size = new Size(305, 942);
             tbpnlTab.TabIndex = 0;
             // 
             // btnElementMode
@@ -105,17 +111,17 @@
             btnElementMode.FillHoverColor = Color.FromArgb(50, 0, 0, 0);
             btnElementMode.FillPressColor = Color.FromArgb(100, 0, 0, 0);
             btnElementMode.FillSelectedColor = Color.FromArgb(50, 0, 0, 0);
-            btnElementMode.Font = new Font("微软雅黑", 12F);
-            btnElementMode.ForeColor = Color.Black;
-            btnElementMode.ForeHoverColor = Color.Black;
-            btnElementMode.ForePressColor = Color.Black;
+            btnElementMode.Font = new Font("微软雅黑", 14F, FontStyle.Bold);
+            btnElementMode.ForeColor = Color.FromArgb(21, 25, 198);
+            btnElementMode.ForeHoverColor = Color.FromArgb(21, 25, 198);
+            btnElementMode.ForePressColor = Color.FromArgb(21, 25, 198);
             btnElementMode.ForeSelectedColor = Color.Black;
             btnElementMode.Location = new Point(3, 3);
             btnElementMode.MinimumSize = new Size(1, 1);
             btnElementMode.Name = "btnElementMode";
             btnElementMode.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
             btnElementMode.RectSides = ToolStripStatusLabelBorderSides.None;
-            btnElementMode.Size = new Size(237, 74);
+            btnElementMode.Size = new Size(299, 137);
             btnElementMode.TabIndex = 0;
             btnElementMode.Text = "元素符号";
             btnElementMode.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -128,17 +134,17 @@
             btnFormulaMode.FillHoverColor = Color.FromArgb(50, 0, 0, 0);
             btnFormulaMode.FillPressColor = Color.FromArgb(100, 0, 0, 0);
             btnFormulaMode.FillSelectedColor = Color.FromArgb(50, 0, 0, 0);
-            btnFormulaMode.Font = new Font("微软雅黑", 12F);
-            btnFormulaMode.ForeColor = Color.Black;
-            btnFormulaMode.ForeHoverColor = Color.Black;
-            btnFormulaMode.ForePressColor = Color.Black;
+            btnFormulaMode.Font = new Font("微软雅黑", 14F, FontStyle.Bold);
+            btnFormulaMode.ForeColor = Color.FromArgb(21, 25, 198);
+            btnFormulaMode.ForeHoverColor = Color.FromArgb(21, 25, 198);
+            btnFormulaMode.ForePressColor = Color.FromArgb(21, 25, 198);
             btnFormulaMode.ForeSelectedColor = Color.Black;
-            btnFormulaMode.Location = new Point(3, 83);
+            btnFormulaMode.Location = new Point(3, 146);
             btnFormulaMode.MinimumSize = new Size(1, 1);
             btnFormulaMode.Name = "btnFormulaMode";
             btnFormulaMode.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
             btnFormulaMode.RectSides = ToolStripStatusLabelBorderSides.None;
-            btnFormulaMode.Size = new Size(237, 74);
+            btnFormulaMode.Size = new Size(299, 137);
             btnFormulaMode.TabIndex = 1;
             btnFormulaMode.Text = "化学式";
             btnFormulaMode.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -151,21 +157,32 @@
             btnSettings.FillHoverColor = Color.FromArgb(50, 0, 0, 0);
             btnSettings.FillPressColor = Color.FromArgb(100, 0, 0, 0);
             btnSettings.FillSelectedColor = Color.FromArgb(50, 0, 0, 0);
-            btnSettings.Font = new Font("微软雅黑", 12F);
-            btnSettings.ForeColor = Color.Black;
-            btnSettings.ForeHoverColor = Color.Black;
-            btnSettings.ForePressColor = Color.Black;
+            btnSettings.Font = new Font("微软雅黑", 14F, FontStyle.Bold);
+            btnSettings.ForeColor = Color.FromArgb(21, 25, 198);
+            btnSettings.ForeHoverColor = Color.FromArgb(21, 25, 198);
+            btnSettings.ForePressColor = Color.FromArgb(21, 25, 198);
             btnSettings.ForeSelectedColor = Color.Black;
-            btnSettings.Location = new Point(3, 163);
+            btnSettings.Location = new Point(3, 289);
             btnSettings.MinimumSize = new Size(1, 1);
             btnSettings.Name = "btnSettings";
             btnSettings.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
             btnSettings.RectSides = ToolStripStatusLabelBorderSides.None;
-            btnSettings.Size = new Size(237, 74);
+            btnSettings.Size = new Size(299, 137);
             btnSettings.TabIndex = 2;
             btnSettings.Text = "设置";
             btnSettings.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
             btnSettings.Click += TabButton_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(3, 677);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(299, 239);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
             // 
             // tbctrlMain
             // 
@@ -175,11 +192,11 @@
             tbctrlMain.Dock = DockStyle.Fill;
             tbctrlMain.Font = new Font("微软雅黑", 10F);
             tbctrlMain.ItemSize = new Size(150, 32);
-            tbctrlMain.Location = new Point(252, 3);
+            tbctrlMain.Location = new Point(314, 3);
             tbctrlMain.Multiline = true;
             tbctrlMain.Name = "tbctrlMain";
             tbctrlMain.SelectedIndex = 0;
-            tbctrlMain.Size = new Size(991, 942);
+            tbctrlMain.Size = new Size(929, 942);
             tbctrlMain.SizeMode = TabSizeMode.Fixed;
             tbctrlMain.TabIndex = 1;
             tbctrlMain.Visible = false;
@@ -190,7 +207,7 @@
             tbpElementMode.Location = new Point(4, 36);
             tbpElementMode.Name = "tbpElementMode";
             tbpElementMode.Padding = new Padding(3);
-            tbpElementMode.Size = new Size(983, 902);
+            tbpElementMode.Size = new Size(921, 902);
             tbpElementMode.TabIndex = 0;
             tbpElementMode.Text = "元素符号";
             tbpElementMode.UseVisualStyleBackColor = true;
@@ -206,7 +223,7 @@
             ElementPanel.Mode = 0;
             ElementPanel.Name = "ElementPanel";
             ElementPanel.QuestionString = "";
-            ElementPanel.Size = new Size(977, 896);
+            ElementPanel.Size = new Size(915, 896);
             ElementPanel.TabIndex = 0;
             ElementPanel.TotalProblemCount = 0;
             ElementPanel.BtnSubmitClick += GamePanel_BtnSubmitClick;
@@ -217,7 +234,7 @@
             tbpFormulaMode.Location = new Point(4, 36);
             tbpFormulaMode.Name = "tbpFormulaMode";
             tbpFormulaMode.Padding = new Padding(3);
-            tbpFormulaMode.Size = new Size(983, 902);
+            tbpFormulaMode.Size = new Size(921, 902);
             tbpFormulaMode.TabIndex = 1;
             tbpFormulaMode.Text = "化学式";
             tbpFormulaMode.UseVisualStyleBackColor = true;
@@ -233,7 +250,7 @@
             FormulaPanel.Mode = 1;
             FormulaPanel.Name = "FormulaPanel";
             FormulaPanel.QuestionString = "";
-            FormulaPanel.Size = new Size(977, 896);
+            FormulaPanel.Size = new Size(915, 896);
             FormulaPanel.TabIndex = 0;
             FormulaPanel.TotalProblemCount = 0;
             FormulaPanel.BtnSubmitClick += GamePanel_BtnSubmitClick;
@@ -244,7 +261,7 @@
             tbpSettings.Location = new Point(4, 36);
             tbpSettings.Name = "tbpSettings";
             tbpSettings.Padding = new Padding(3);
-            tbpSettings.Size = new Size(983, 902);
+            tbpSettings.Size = new Size(921, 902);
             tbpSettings.TabIndex = 2;
             tbpSettings.Text = "设置";
             tbpSettings.UseVisualStyleBackColor = true;
@@ -263,7 +280,7 @@
             tbctrlSettings.MenuStyle = Sunny.UI.UIMenuStyle.Custom;
             tbctrlSettings.Name = "tbctrlSettings";
             tbctrlSettings.SelectedIndex = 0;
-            tbctrlSettings.Size = new Size(977, 896);
+            tbctrlSettings.Size = new Size(915, 896);
             tbctrlSettings.SizeMode = TabSizeMode.Fixed;
             tbctrlSettings.TabBackColor = Color.FromArgb(243, 249, 255);
             tbctrlSettings.TabIndex = 0;
@@ -280,7 +297,7 @@
             tbpElementQnAs.Controls.Add(tblpnlElementQnAs);
             tbpElementQnAs.Location = new Point(0, 40);
             tbpElementQnAs.Name = "tbpElementQnAs";
-            tbpElementQnAs.Size = new Size(977, 856);
+            tbpElementQnAs.Size = new Size(915, 856);
             tbpElementQnAs.TabIndex = 0;
             tbpElementQnAs.Text = "元素符号题库设定";
             // 
@@ -298,7 +315,7 @@
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlElementQnAs.Size = new Size(977, 856);
+            tblpnlElementQnAs.Size = new Size(915, 856);
             tblpnlElementQnAs.TabIndex = 0;
             // 
             // lbl1
@@ -308,7 +325,7 @@
             lbl1.Font = new Font("微软雅黑", 12F);
             lbl1.Location = new Point(3, 0);
             lbl1.Name = "lbl1";
-            lbl1.Size = new Size(971, 50);
+            lbl1.Size = new Size(909, 50);
             lbl1.TabIndex = 0;
             lbl1.Text = "元素符号题库设置（一行为一组，先输入问题后输入答案，用逗号分割）";
             lbl1.TextAlign = ContentAlignment.MiddleLeft;
@@ -326,7 +343,7 @@
             txtElementQnAs.ScrollBarWidth = 5;
             txtElementQnAs.ShowScrollBar = true;
             txtElementQnAs.ShowText = false;
-            txtElementQnAs.Size = new Size(969, 726);
+            txtElementQnAs.Size = new Size(907, 726);
             txtElementQnAs.TabIndex = 1;
             txtElementQnAs.TextAlignment = ContentAlignment.MiddleLeft;
             txtElementQnAs.Watermark = "";
@@ -340,7 +357,7 @@
             btnElementSave.Location = new Point(3, 789);
             btnElementSave.MinimumSize = new Size(1, 1);
             btnElementSave.Name = "btnElementSave";
-            btnElementSave.Size = new Size(971, 64);
+            btnElementSave.Size = new Size(909, 64);
             btnElementSave.TabIndex = 2;
             btnElementSave.Text = "保存更改";
             btnElementSave.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -433,6 +450,7 @@
             ClientSize = new Size(1250, 1000);
             Controls.Add(tbpnlMain);
             Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1250, 1000);
             Name = "main";
             Padding = new Padding(2, 50, 2, 2);
@@ -443,8 +461,10 @@
             TitleHeight = 50;
             ZoomScaleRect = new Rectangle(15, 15, 794, 675);
             Load += main_Load;
+            Resize += main_Resize;
             tbpnlMain.ResumeLayout(false);
             tbpnlTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tbctrlMain.ResumeLayout(false);
             tbpElementMode.ResumeLayout(false);
             tbpFormulaMode.ResumeLayout(false);
@@ -483,5 +503,6 @@
         private Label lbl2;
         private Sunny.UI.UIButton btnFormulaSave;
         private Sunny.UI.UITextBox txtElementQnAs;
+        private PictureBox pictureBox1;
     }
 }
