@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tblpnlElementMode = new TableLayoutPanel();
+            tblpnlGame = new TableLayoutPanel();
             btnSubmit = new Sunny.UI.UIButton();
             tblpnlStatus = new TableLayoutPanel();
             lbl2 = new Label();
@@ -42,30 +42,30 @@
             tblpnlAnswer = new TableLayoutPanel();
             txtAnswer = new Sunny.UI.UITextBox();
             lbl4 = new Label();
-            tblpnlElementMode.SuspendLayout();
+            tblpnlGame.SuspendLayout();
             tblpnlStatus.SuspendLayout();
             tblpnlQuestion.SuspendLayout();
             tblpnlAnswer.SuspendLayout();
             SuspendLayout();
             // 
-            // tblpnlElementMode
+            // tblpnlGame
             // 
-            tblpnlElementMode.ColumnCount = 1;
-            tblpnlElementMode.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tblpnlElementMode.Controls.Add(btnSubmit, 0, 3);
-            tblpnlElementMode.Controls.Add(tblpnlStatus, 0, 0);
-            tblpnlElementMode.Controls.Add(tblpnlQuestion, 0, 1);
-            tblpnlElementMode.Controls.Add(tblpnlAnswer, 0, 2);
-            tblpnlElementMode.Dock = DockStyle.Fill;
-            tblpnlElementMode.Location = new Point(0, 0);
-            tblpnlElementMode.Name = "tblpnlElementMode";
-            tblpnlElementMode.RowCount = 4;
-            tblpnlElementMode.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlElementMode.RowStyles.Add(new RowStyle(SizeType.Percent, 37.5F));
-            tblpnlElementMode.RowStyles.Add(new RowStyle(SizeType.Percent, 62.5F));
-            tblpnlElementMode.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlElementMode.Size = new Size(1000, 1000);
-            tblpnlElementMode.TabIndex = 0;
+            tblpnlGame.ColumnCount = 1;
+            tblpnlGame.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblpnlGame.Controls.Add(btnSubmit, 0, 3);
+            tblpnlGame.Controls.Add(tblpnlStatus, 0, 0);
+            tblpnlGame.Controls.Add(tblpnlQuestion, 0, 1);
+            tblpnlGame.Controls.Add(tblpnlAnswer, 0, 2);
+            tblpnlGame.Dock = DockStyle.Fill;
+            tblpnlGame.Location = new Point(0, 0);
+            tblpnlGame.Name = "tblpnlGame";
+            tblpnlGame.RowCount = 4;
+            tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
+            tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Percent, 37.5F));
+            tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Percent, 62.5F));
+            tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
+            tblpnlGame.Size = new Size(1000, 1000);
+            tblpnlGame.TabIndex = 0;
             // 
             // btnSubmit
             // 
@@ -254,12 +254,12 @@
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(tblpnlElementMode);
+            Controls.Add(tblpnlGame);
             Name = "GamePanel";
             Size = new Size(1000, 1000);
             Load += ElementModePanel_Load;
             Resize += GamePanel_Resize;
-            tblpnlElementMode.ResumeLayout(false);
+            tblpnlGame.ResumeLayout(false);
             tblpnlStatus.ResumeLayout(false);
             tblpnlStatus.PerformLayout();
             tblpnlQuestion.ResumeLayout(false);
@@ -271,7 +271,7 @@
 
         #endregion
 
-        private TableLayoutPanel tblpnlElementMode;
+        private TableLayoutPanel tblpnlGame;
         private TableLayoutPanel tblpnlStatus;
         private TableLayoutPanel tblpnlQuestion;
         private TableLayoutPanel tblpnlAnswer;

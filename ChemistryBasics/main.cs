@@ -219,13 +219,6 @@ namespace ChemistryBasics
 
         private void TabButton_Click(object sender, EventArgs e)
         {
-            if (ActiveInitPanel != null)
-            {
-                ActiveInitPanel.Dispose();
-                //MessageBox.Show("Disposed.");
-                ActiveInitPanel = null;
-            }
-
             UIButton? clickedBtn = sender as UIButton;
             if (clickedBtn != null)
             {
@@ -252,13 +245,19 @@ namespace ChemistryBasics
                 if (mode != 2)
                 {
                     InitSettingsPanel initpnl = new InitSettingsPanel(mode);
-                    ActiveInitPanel = initpnl;
+                    
                     tbctrlMain.TabPages[mode].Controls.Add(initpnl);
                     initpnl.Dock = DockStyle.Fill;
                     initpnl.AlertString = strAlerts[mode];
                     initpnl.MaximumCount = dictQnA[mode].Count;
                     initpnl.BringToFront();
                     initpnl.Show();
+                    if(ActiveInitPanel != null)
+                    {
+                        ActiveInitPanel.Dispose();
+                    }
+                    ActiveInitPanel = initpnl;
+
 
                     intGameStatus = mode;
                     initpnl.BtnStartClick += initSettingsPanel_BtnStart_Click;
