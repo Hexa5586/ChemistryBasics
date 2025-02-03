@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             tblpnlResult = new TableLayoutPanel();
             btnClose = new Sunny.UI.UIButton();
             tblpnlTitle = new TableLayoutPanel();
+            lblMode = new Label();
+            lblCorrectnTotal = new Label();
             tblpnlScoreRank = new TableLayoutPanel();
+            lblAccuracy = new Label();
+            lblRank = new Label();
             dataErrors = new Sunny.UI.UIDataGridView();
             dcolQuestion = new DataGridViewTextBoxColumn();
             dcolCorrectAnswer = new DataGridViewTextBoxColumn();
             dcolWrongAnswer = new DataGridViewTextBoxColumn();
-            lblMode = new Label();
-            lblCorrectnTotal = new Label();
-            lblAccuracy = new Label();
-            lblRank = new Label();
             tblpnlResult.SuspendLayout();
             tblpnlTitle.SuspendLayout();
             tblpnlScoreRank.SuspendLayout();
@@ -67,20 +67,21 @@
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlResult.Size = new Size(1000, 1000);
+            tblpnlResult.Size = new Size(1102, 1096);
             tblpnlResult.TabIndex = 0;
             // 
             // btnClose
             // 
             btnClose.Dock = DockStyle.Fill;
             btnClose.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            btnClose.Location = new Point(3, 933);
+            btnClose.Location = new Point(3, 1028);
             btnClose.MinimumSize = new Size(1, 1);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(994, 64);
+            btnClose.Size = new Size(1096, 65);
             btnClose.TabIndex = 0;
             btnClose.Text = "关闭";
             btnClose.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            btnClose.Click += btnClose_Click;
             // 
             // tblpnlTitle
             // 
@@ -94,14 +95,38 @@
             tblpnlTitle.Name = "tblpnlTitle";
             tblpnlTitle.RowCount = 1;
             tblpnlTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblpnlTitle.Size = new Size(994, 64);
+            tblpnlTitle.Size = new Size(1096, 64);
             tblpnlTitle.TabIndex = 1;
+            // 
+            // lblMode
+            // 
+            lblMode.AutoSize = true;
+            lblMode.Dock = DockStyle.Fill;
+            lblMode.Font = new Font("Microsoft YaHei UI", 14F);
+            lblMode.Location = new Point(3, 0);
+            lblMode.Name = "lblMode";
+            lblMode.Size = new Size(651, 64);
+            lblMode.TabIndex = 0;
+            lblMode.Text = "MODE";
+            lblMode.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblCorrectnTotal
+            // 
+            lblCorrectnTotal.AutoSize = true;
+            lblCorrectnTotal.Dock = DockStyle.Fill;
+            lblCorrectnTotal.Font = new Font("Microsoft YaHei UI", 15F);
+            lblCorrectnTotal.Location = new Point(660, 0);
+            lblCorrectnTotal.Name = "lblCorrectnTotal";
+            lblCorrectnTotal.Size = new Size(433, 64);
+            lblCorrectnTotal.TabIndex = 1;
+            lblCorrectnTotal.Text = "X/X";
+            lblCorrectnTotal.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tblpnlScoreRank
             // 
             tblpnlScoreRank.ColumnCount = 2;
-            tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             tblpnlScoreRank.Controls.Add(lblAccuracy, 0, 0);
             tblpnlScoreRank.Controls.Add(lblRank, 1, 0);
             tblpnlScoreRank.Dock = DockStyle.Fill;
@@ -109,58 +134,87 @@
             tblpnlScoreRank.Name = "tblpnlScoreRank";
             tblpnlScoreRank.RowCount = 1;
             tblpnlScoreRank.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblpnlScoreRank.Size = new Size(994, 338);
+            tblpnlScoreRank.Size = new Size(1096, 376);
             tblpnlScoreRank.TabIndex = 2;
+            // 
+            // lblAccuracy
+            // 
+            lblAccuracy.AutoSize = true;
+            lblAccuracy.Dock = DockStyle.Fill;
+            lblAccuracy.Font = new Font("Unispace", 76F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAccuracy.Location = new Point(3, 0);
+            lblAccuracy.Name = "lblAccuracy";
+            lblAccuracy.Size = new Size(706, 376);
+            lblAccuracy.TabIndex = 0;
+            lblAccuracy.Text = "XX.X%";
+            lblAccuracy.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblRank
+            // 
+            lblRank.AutoSize = true;
+            lblRank.Dock = DockStyle.Fill;
+            lblRank.Font = new Font("Unispace", 110F, FontStyle.Bold);
+            lblRank.Location = new Point(715, 0);
+            lblRank.Name = "lblRank";
+            lblRank.Size = new Size(378, 376);
+            lblRank.TabIndex = 1;
+            lblRank.Text = "RA";
+            lblRank.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // dataErrors
             // 
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(235, 243, 255);
-            dataErrors.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataErrors.AllowUserToAddRows = false;
+            dataErrors.AllowUserToDeleteRows = false;
+            dataErrors.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(235, 243, 255);
+            dataErrors.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataErrors.BackgroundColor = Color.White;
             dataErrors.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(80, 160, 255);
-            dataGridViewCellStyle7.Font = new Font("微软雅黑", 12F);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dataErrors.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle2.Font = new Font("微软雅黑", 12F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataErrors.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataErrors.ColumnHeadersHeight = 50;
             dataErrors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataErrors.Columns.AddRange(new DataGridViewColumn[] { dcolQuestion, dcolCorrectAnswer, dcolWrongAnswer });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Window;
-            dataGridViewCellStyle8.Font = new Font("微软雅黑", 12F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dataErrors.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("微软雅黑", 24F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dataErrors.DefaultCellStyle = dataGridViewCellStyle3;
             dataErrors.Dock = DockStyle.Fill;
+            dataErrors.Enabled = false;
             dataErrors.EnableHeadersVisualStyles = false;
             dataErrors.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
             dataErrors.GridColor = Color.FromArgb(80, 160, 255);
-            dataErrors.Location = new Point(3, 417);
+            dataErrors.Location = new Point(3, 455);
+            dataErrors.MultiSelect = false;
             dataErrors.Name = "dataErrors";
             dataErrors.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(235, 243, 255);
-            dataGridViewCellStyle9.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            dataGridViewCellStyle9.ForeColor = Color.FromArgb(48, 48, 48);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(80, 160, 255);
-            dataGridViewCellStyle9.SelectionForeColor = Color.White;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dataErrors.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(235, 243, 255);
+            dataGridViewCellStyle4.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataErrors.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataErrors.RowHeadersWidth = 62;
-            dataGridViewCellStyle10.BackColor = Color.White;
-            dataGridViewCellStyle10.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            dataErrors.RowsDefaultCellStyle = dataGridViewCellStyle10;
-            dataErrors.RowTemplate.Height = 50;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            dataErrors.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataErrors.RowTemplate.DefaultCellStyle.Font = new Font("微软雅黑", 24F);
+            dataErrors.RowTemplate.Height = 80;
             dataErrors.ScrollMode = Sunny.UI.UIDataGridView.UIDataGridViewScrollMode.Page;
             dataErrors.SelectedIndex = -1;
-            dataErrors.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dataErrors.Size = new Size(994, 510);
+            dataErrors.Size = new Size(1096, 567);
             dataErrors.StripeOddColor = Color.FromArgb(235, 243, 255);
             dataErrors.TabIndex = 3;
             // 
@@ -188,59 +242,16 @@
             dcolWrongAnswer.Name = "dcolWrongAnswer";
             dcolWrongAnswer.ReadOnly = true;
             // 
-            // lblMode
-            // 
-            lblMode.AutoSize = true;
-            lblMode.Dock = DockStyle.Fill;
-            lblMode.Font = new Font("Microsoft YaHei UI", 12F);
-            lblMode.Location = new Point(3, 0);
-            lblMode.Name = "lblMode";
-            lblMode.Size = new Size(590, 64);
-            lblMode.TabIndex = 0;
-            lblMode.Text = "MODE";
-            lblMode.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblCorrectnTotal
-            // 
-            lblCorrectnTotal.AutoSize = true;
-            lblCorrectnTotal.Dock = DockStyle.Fill;
-            lblCorrectnTotal.Font = new Font("Microsoft YaHei UI", 12F);
-            lblCorrectnTotal.Location = new Point(599, 0);
-            lblCorrectnTotal.Name = "lblCorrectnTotal";
-            lblCorrectnTotal.Size = new Size(392, 64);
-            lblCorrectnTotal.TabIndex = 1;
-            lblCorrectnTotal.Text = "X/X";
-            lblCorrectnTotal.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblAccuracy
-            // 
-            lblAccuracy.AutoSize = true;
-            lblAccuracy.Dock = DockStyle.Fill;
-            lblAccuracy.Location = new Point(3, 0);
-            lblAccuracy.Name = "lblAccuracy";
-            lblAccuracy.Size = new Size(590, 338);
-            lblAccuracy.TabIndex = 0;
-            lblAccuracy.Text = "XX.XX%";
-            lblAccuracy.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblRank
-            // 
-            lblRank.AutoSize = true;
-            lblRank.Dock = DockStyle.Fill;
-            lblRank.Location = new Point(599, 0);
-            lblRank.Name = "lblRank";
-            lblRank.Size = new Size(392, 338);
-            lblRank.TabIndex = 1;
-            lblRank.Text = "RANK";
-            lblRank.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // ResultPanel
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlResult);
+            MinimumSize = new Size(1102, 1096);
             Name = "ResultPanel";
-            Size = new Size(1000, 1000);
+            Size = new Size(1102, 1096);
+            Load += ResultPanel_Load;
+            Resize += ResultPanel_Resize;
             tblpnlResult.ResumeLayout(false);
             tblpnlTitle.ResumeLayout(false);
             tblpnlTitle.PerformLayout();

@@ -15,7 +15,7 @@ namespace ChemistryBasics
 
     public partial class main : UIForm
     {
-        private string[] questionPaths = { "data/elements.json", "data/formulas.json" };
+        private string[] questionPaths = { "elements.json", "formulas.json" };
         private Dictionary<string, string>[] dictQnA = { new Dictionary<string, string>(),
                                                          new Dictionary<string, string>()};
         private string[] strAlerts =
@@ -30,8 +30,9 @@ namespace ChemistryBasics
         private int intGameStatus = -1;
         private List<int> lstCurrentQuestionNums = new List<int>();
         private GamePanel? ActivePanel = null;
-        private InitSettingsPanel? ActiveInitPanel = null;
+        private List<Control> ActiveTempPanels = new List<Control>();
         private int btnSubmitCounter = 0;
+        private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
 
         public main()
         {
@@ -46,25 +47,67 @@ namespace ChemistryBasics
             txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
             btnElementSave.Enabled = false;
             btnFormulaSave.Enabled = false;
-            this.main_Resize(sender, e);
+            RecordInitialFontSizes(this);
+
+            ElementPanel.Reset();
+            FormulaPanel.Reset();
+        }
+        private void RecordInitialFontSizes(Control control)
+        {
+            foreach (Control childControl in control.Controls)
+            {
+                // 记录当前控件的初始字体大小
+                initialFontSizes[childControl] = childControl.Font.Size;
+
+                // 递归处理子控件
+                if (childControl.Controls.Count > 0)
+                {
+                    RecordInitialFontSizes(childControl);
+                }
+            }
+        }
+
+        private void ScaleFonts(Control control)
+        {
+            // 计算缩放比例（基于窗体宽度或高度的变化）
+            float scaleFactor = Math.Min(
+                (float)this.Width / this.MinimumSize.Width,
+                (float)this.Height / this.MinimumSize.Height
+            );
+
+            foreach (Control childControl in this.tblpnlTab.Controls)
+            {
+                if (initialFontSizes.ContainsKey(childControl))
+                {
+                    // 根据初始字体大小和缩放比例计算新字体大小
+                    float initialSize = initialFontSizes[childControl];
+                    float newSize = initialSize * scaleFactor;
+
+                    // 设置新字体大小
+                    childControl.Font = new Font(childControl.Font.FontFamily, newSize, childControl.Font.Style);
+                }
+            }
         }
 
         private void ReadQnAData()
         {
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
+                if (!File.Exists(questionPaths[i]))
                 {
-                    string strSerializedQuestions = File.ReadAllText(questionPaths[i]);
-                    dictQnA[i] =
-                        JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedQuestions);
+                    FileStream fs = File.Create(questionPaths[i]);
+                    fs.Dispose();
                 }
+                string strSerializedQuestions = File.ReadAllText(questionPaths[i]);
+                Dictionary<string, string>? dict = 
+                    JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedQuestions);
+                if(dict != null)
+                {
+                    dictQnA[i] = dict;
+                }
+                
+            }
 
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("读取JSON文件发生错误。", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private string Dict2Csv(Dictionary<string, string>? dict)
@@ -125,12 +168,19 @@ namespace ChemistryBasics
 
         private void initSettingsPanel_BtnStart_Click(object sender, EventArgs e)
         {
-            ActiveInitPanel = sender as InitSettingsPanel;
+            InitSettingsPanel? ActiveInitPanel = sender as InitSettingsPanel;
             if (ActiveInitPanel == null)
                 return;
 
             int totalProblemCnt = ActiveInitPanel.TotalProblemCount;
+            if(totalProblemCnt == 0)
+            {
+                MessageBox.Show("问题总数不可为零。请于设置页面确认题库非空。", "提示", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             ActiveInitPanel.Dispose();
+            ActiveTempPanels.Clear();
 
             if (intGameStatus == 0)
             {
@@ -188,6 +238,7 @@ namespace ChemistryBasics
                 }
                 else
                 {
+                    ActivePanel.RecordAsError();
                     ActivePanel.SetAnswerStatus(-1);
                 }
 
@@ -199,8 +250,17 @@ namespace ChemistryBasics
 
                 if (ActivePanel.FinishedProblemCount >= ActivePanel.TotalProblemCount)
                 {
-                    tbctrlMain.Hide();
-                    MessageBox.Show("正确率：" + ActivePanel.GetCurrentAccuracy());
+                    //tbctrlMain.Hide();
+                    //MessageBox.Show("正确率：" + ActivePanel.GetCurrentAccuracy().ToString() + "%");
+                    ResultPanel respnl = new ResultPanel(ActivePanel.Mode, ActivePanel.CorrectAnswerCount, ActivePanel.TotalProblemCount, 
+                                                         ActivePanel.errors);
+                    tbctrlMain.TabPages[ActivePanel.Mode].Controls.Add(respnl);
+                    respnl.Dock = DockStyle.Fill;
+                    respnl.BtnCloseClick += BtnCloseClick;
+                    respnl.BringToFront();
+                    respnl.Show();
+                    ActiveTempPanels.Add(respnl);
+
                     if (ActivePanel != null)
                     {
                         ActivePanel.Reset();
@@ -226,7 +286,7 @@ namespace ChemistryBasics
                 tbctrlMain.Show();
                 int mode = tbctrlMain.SelectedIndex;
 
-                foreach (Control con in tbpnlTab.Controls)
+                foreach (Control con in tblpnlTab.Controls)
                 {
                     if (con != null && con.GetType() == typeof(UIButton))
                     {
@@ -244,20 +304,22 @@ namespace ChemistryBasics
 
                 if (mode != 2)
                 {
+                    ReadQnAData();
+                    foreach (Control pnl in ActiveTempPanels)
+                    {
+                        pnl.Dispose();
+                    }
+                    ActiveTempPanels.Clear();
+
                     InitSettingsPanel initpnl = new InitSettingsPanel(mode);
-                    
+                    ActiveTempPanels.Add(initpnl);
+
                     tbctrlMain.TabPages[mode].Controls.Add(initpnl);
                     initpnl.Dock = DockStyle.Fill;
                     initpnl.AlertString = strAlerts[mode];
                     initpnl.MaximumCount = dictQnA[mode].Count;
                     initpnl.BringToFront();
                     initpnl.Show();
-                    if(ActiveInitPanel != null)
-                    {
-                        ActiveInitPanel.Dispose();
-                    }
-                    ActiveInitPanel = initpnl;
-
 
                     intGameStatus = mode;
                     initpnl.BtnStartClick += initSettingsPanel_BtnStart_Click;
@@ -302,16 +364,16 @@ namespace ChemistryBasics
             }
         }
 
+        private void BtnCloseClick(object sender, EventArgs e)
+        {
+            tbctrlMain.Hide();
+        }
+
         private void main_Resize(object sender, EventArgs e)
         {
-            foreach (Control con in tbpnlTab.Controls)
-            {
-                if (con != null && con.GetType() == typeof(UIButton))
-                {
-                    con.Font = new Font(con.Font.FontFamily, (float)(con.Height * 1.0 / 96 * 11), con.Font.Style);
-                }
-            }
+            ScaleFonts(this);
         }
+
     }
 
 

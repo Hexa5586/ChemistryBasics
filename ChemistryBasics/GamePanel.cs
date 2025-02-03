@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,9 @@ namespace ChemistryBasics
         private int mode;
         private int btnSubmitCounter = 0;
         private string[] btnSubmitDisplay = { "确认", "下一题" };
+        private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
+
+        public List<Tuple<string, string, string>> errors = new List<Tuple<string, string, string>>();
 
         public GamePanel()
         {
@@ -62,11 +66,58 @@ namespace ChemistryBasics
             }
         }
 
+        private void RecordInitialFontSizes(Control control)
+        {
+            foreach (Control childControl in control.Controls)
+            {
+                // 记录当前控件的初始字体大小
+                initialFontSizes[childControl] = childControl.Font.Size;
+
+                // 递归处理子控件
+                if (childControl.Controls.Count > 0)
+                {
+                    RecordInitialFontSizes(childControl);
+                }
+            }
+        }
+
+        private void ScaleFonts(Control control)
+        {
+            // 计算缩放比例（基于窗体宽度或高度的变化）
+            float scaleFactor = Math.Min(
+                (float)this.Width / this.MinimumSize.Width,
+                (float)this.Height / this.MinimumSize.Height
+            );
+
+            List<Control> controls = new List<Control>{ txtQuestion, txtAnswer };
+            foreach (Control childControl in controls)
+            {
+                if (initialFontSizes.ContainsKey(childControl))
+                {
+                    // 根据初始字体大小和缩放比例计算新字体大小
+                    float initialSize = initialFontSizes[childControl];
+                    float newSize = initialSize * scaleFactor;
+
+                    // 设置新字体大小
+                    childControl.Font = new Font(childControl.Font.FontFamily, newSize, childControl.Font.Style);
+                }
+
+            }
+        }
         public void Reset()
         {
             intTime = intTotalProblemCnt = intFinishedProblemCnt = intCorrectProblemCnt = 0;
             strQuestion = strCorrectAnswer = "";
-            txtAnswer.Text = lblQuestion.Text = "";
+            txtAnswer.Text = txtQuestion.Text = "";
+
+            errors.Clear();
+
+            RecordInitialFontSizes(this);
+        }
+
+        public void RecordAsError()
+        {
+            errors.Add(new Tuple<string, string, string>(QuestionString, CorrectAnswerString, AnswerString));
         }
 
         public void FocusOnTextBox()
@@ -106,14 +157,14 @@ namespace ChemistryBasics
             return this.strCorrectAnswer.Trim() == this.txtAnswer.Text.Trim();
         }
 
-        public string GetCurrentAccuracy()
+        public double GetCurrentAccuracy()
         {
             if (intFinishedProblemCnt == 0)
             {
-                return "100.00%";
+                return 100.00;
             }
             double accuracy = intCorrectProblemCnt * 100.0 / intFinishedProblemCnt;
-            return accuracy.ToString("F2") + "%";
+            return Math.Round(accuracy, 2);
         }
 
         private void txtAnswer_KeyDown(object sender, KeyEventArgs e)
@@ -130,9 +181,7 @@ namespace ChemistryBasics
 
         private void GamePanel_Resize(object sender, EventArgs e)
         {
-            this.lblQuestion.Font = new Font(this.lblQuestion.Font.FontFamily, (float)(this.tblpnlQuestion.Height * 1.0 / 96 * 18));
-            this.txtAnswer.Font = new Font(this.txtAnswer.Font.FontFamily, (float)(this.tblpnlAnswer.Height * 1.0 / 96 * 16));
-            this.txtAnswer.Height = (int)(this.tblpnlAnswer.Height);
+            ScaleFonts(this);
         }
 
         [Browsable(true)]
@@ -152,13 +201,13 @@ namespace ChemistryBasics
         {
             get
             {
-                return this.lblQuestion.Text;
+                return this.txtQuestion.Text;
             }
 
             set
             {
                 strQuestion = value;
-                this.lblQuestion.Text = value;
+                this.txtQuestion.Text = value;
             }
         }
 
@@ -220,7 +269,7 @@ namespace ChemistryBasics
             {
                 intFinishedProblemCnt = value;
                 this.lblProgress.Text = (intFinishedProblemCnt).ToString() + "/" + intTotalProblemCnt.ToString();
-                this.lblAccuracy.Text = this.GetCurrentAccuracy();
+                this.lblAccuracy.Text = this.GetCurrentAccuracy().ToString("F1") + "%";
             }
         }
 

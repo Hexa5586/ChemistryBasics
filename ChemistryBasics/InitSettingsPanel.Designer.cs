@@ -93,7 +93,7 @@
             numProblemCount.Font = new Font("微软雅黑", 12F);
             numProblemCount.Location = new Point(204, 5);
             numProblemCount.Margin = new Padding(4, 5, 4, 5);
-            numProblemCount.Minimum = 3;
+            numProblemCount.Minimum = 0;
             numProblemCount.MinimumSize = new Size(100, 0);
             numProblemCount.Name = "numProblemCount";
             numProblemCount.ShowText = false;

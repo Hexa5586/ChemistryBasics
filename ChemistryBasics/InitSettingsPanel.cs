@@ -67,6 +67,7 @@ namespace ChemistryBasics
             set
             {
                 this.numProblemCount.Maximum = value;
+                this.numProblemCount.Value = Math.Min(this.numProblemCount.Value, this.numProblemCount.Maximum);
             }
         }
     }
