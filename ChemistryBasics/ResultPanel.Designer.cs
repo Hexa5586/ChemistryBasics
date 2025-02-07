@@ -153,7 +153,7 @@
             // 
             lblRank.AutoSize = true;
             lblRank.Dock = DockStyle.Fill;
-            lblRank.Font = new Font("Unispace", 110F, FontStyle.Bold);
+            lblRank.Font = new Font("Unispace", 110F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lblRank.Location = new Point(715, 0);
             lblRank.Name = "lblRank";
             lblRank.Size = new Size(378, 376);

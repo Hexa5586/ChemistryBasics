@@ -27,7 +27,7 @@ namespace ChemistryBasics
             Color.FromArgb(36, 218, 64),
             Color.FromArgb(127, 127, 127)
         };
-        public event EventHandler BtnCloseClick;
+        public event EventHandler? BtnCloseClick;
         private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
 
         public ResultPanel(int mode, int correct_answer_cnt, int total_cnt, 
@@ -39,7 +39,7 @@ namespace ChemistryBasics
             {
                 pfc.AddFontFile("unispace bd.ttf");
             }
-            finally
+            catch (Exception)
             {
                 ;
             }
@@ -112,8 +112,16 @@ namespace ChemistryBasics
 
         private void ResultPanel_Load(object sender, EventArgs e)
         {
-            lblAccuracy.Font = new Font(pfc.Families[0], lblAccuracy.Font.Size, lblAccuracy.Font.Style);
-            lblRank.Font = new Font(pfc.Families[0], lblRank.Font.Size, lblRank.Font.Style);
+            try
+            {
+                lblAccuracy.Font = new Font(pfc.Families[0], lblAccuracy.Font.Size, lblAccuracy.Font.Style);
+                lblRank.Font = new Font(pfc.Families[0], lblRank.Font.Size, lblRank.Font.Style);
+            }
+            catch (Exception)
+            {
+                ;
+            }
+            
             dataErrors.ClearSelection();
             RecordInitialFontSizes(this);
         }

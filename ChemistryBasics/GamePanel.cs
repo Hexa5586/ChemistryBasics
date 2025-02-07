@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ChemistryBasics
 {
     public partial class GamePanel : UserControl
     {
-
+        PrivateFontCollection pfc = new PrivateFontCollection();
         private int intTime = 0;
         private int intTotalProblemCnt = 0, intFinishedProblemCnt = 0, intCorrectProblemCnt = 0;
         private string strQuestion = "", strCorrectAnswer = "";
@@ -21,23 +22,36 @@ namespace ChemistryBasics
         private int btnSubmitCounter = 0;
         private string[] btnSubmitDisplay = { "确认", "下一题" };
         private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
+        public event EventHandler? BtnSubmitClick;
 
         public List<Tuple<string, string, string>> errors = new List<Tuple<string, string, string>>();
 
         public GamePanel()
         {
             InitializeComponent();
+            try
+            {
+                pfc.AddFontFile("calibrib.ttf");
+            }
+            catch (Exception)
+            {
+                ;
+            }
         }
 
         private void ElementModePanel_Load(object sender, EventArgs e)
         {
             this.Reset();
+            try
+            {
+                txtAnswer.Font = new Font(pfc.Families[0], txtAnswer.Font.Size, txtAnswer.Font.Style);
+            }
+            catch (Exception)
+            {
+                ;
+            }
+            
         }
-
-        /// <summary>
-        /// 事件
-        /// </summary>
-        public event EventHandler BtnSubmitClick;
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -66,6 +80,35 @@ namespace ChemistryBasics
             }
         }
 
+        private void txtAnswer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+            {
+                if (btnSubmit.Enabled && BtnSubmitClick != null)
+                {
+                    BtnSubmitClick(sender, e);
+                }
+                FocusOnTextBox();
+            }
+        }
+
+        private void GamePanel_Resize(object sender, EventArgs e)
+        {
+            ScaleFonts(this);
+        }
+
+        private void txtAnswer_TextChanged(object sender, EventArgs e)
+        {
+            if (txtAnswer.Text == "")
+            {
+                btnSubmit.Enabled = false;
+            }
+            else
+            {
+                btnSubmit.Enabled = true;
+            }
+        }
+
         private void RecordInitialFontSizes(Control control)
         {
             foreach (Control childControl in control.Controls)
@@ -89,7 +132,7 @@ namespace ChemistryBasics
                 (float)this.Height / this.MinimumSize.Height
             );
 
-            List<Control> controls = new List<Control>{ txtQuestion, txtAnswer };
+            List<Control> controls = new List<Control> { txtQuestion, txtAnswer };
             foreach (Control childControl in controls)
             {
                 if (initialFontSizes.ContainsKey(childControl))
@@ -165,23 +208,6 @@ namespace ChemistryBasics
             }
             double accuracy = intCorrectProblemCnt * 100.0 / intFinishedProblemCnt;
             return Math.Round(accuracy, 2);
-        }
-
-        private void txtAnswer_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
-            {
-                if (BtnSubmitClick != null)
-                {
-                    BtnSubmitClick(sender, e);
-                }
-                FocusOnTextBox();
-            }
-        }
-
-        private void GamePanel_Resize(object sender, EventArgs e)
-        {
-            ScaleFonts(this);
         }
 
         [Browsable(true)]

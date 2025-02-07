@@ -70,6 +70,7 @@
             // btnSubmit
             // 
             btnSubmit.Dock = DockStyle.Fill;
+            btnSubmit.Enabled = false;
             btnSubmit.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
             btnSubmit.Location = new Point(3, 1028);
             btnSubmit.MinimumSize = new Size(1, 1);
@@ -242,6 +243,7 @@
             txtAnswer.Text = "ANSWER";
             txtAnswer.TextAlignment = ContentAlignment.MiddleCenter;
             txtAnswer.Watermark = "";
+            txtAnswer.TextChanged += txtAnswer_TextChanged;
             txtAnswer.KeyDown += txtAnswer_KeyDown;
             txtAnswer.KeyPress += txtAnswer_KeyPress;
             // 
