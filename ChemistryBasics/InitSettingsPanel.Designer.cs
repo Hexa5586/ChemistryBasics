@@ -61,8 +61,8 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
             tableLayoutPanel1.Controls.Add(lbl1, 0, 0);
             tableLayoutPanel1.Controls.Add(numProblemCount, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -81,7 +81,7 @@
             lbl1.Font = new Font("Microsoft YaHei UI", 12F);
             lbl1.Location = new Point(3, 0);
             lbl1.Name = "lbl1";
-            lbl1.Size = new Size(194, 64);
+            lbl1.Size = new Size(212, 64);
             lbl1.TabIndex = 0;
             lbl1.Text = "题目数量";
             lbl1.TextAlign = ContentAlignment.MiddleCenter;
@@ -91,13 +91,13 @@
             numProblemCount.AutoSize = true;
             numProblemCount.Dock = DockStyle.Fill;
             numProblemCount.Font = new Font("微软雅黑", 12F);
-            numProblemCount.Location = new Point(204, 5);
+            numProblemCount.Location = new Point(222, 5);
             numProblemCount.Margin = new Padding(4, 5, 4, 5);
             numProblemCount.Minimum = 0;
             numProblemCount.MinimumSize = new Size(100, 0);
             numProblemCount.Name = "numProblemCount";
             numProblemCount.ShowText = false;
-            numProblemCount.Size = new Size(886, 54);
+            numProblemCount.Size = new Size(868, 54);
             numProblemCount.TabIndex = 1;
             numProblemCount.Text = "uiIntegerUpDown1";
             numProblemCount.TextAlignment = ContentAlignment.MiddleCenter;
@@ -119,7 +119,7 @@
             // btnStart
             // 
             btnStart.Dock = DockStyle.Fill;
-            btnStart.Font = new Font("微软雅黑", 12F);
+            btnStart.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
             btnStart.Location = new Point(3, 1033);
             btnStart.MinimumSize = new Size(1, 1);
             btnStart.Name = "btnStart";

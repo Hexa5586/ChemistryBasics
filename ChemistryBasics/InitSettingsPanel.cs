@@ -13,12 +13,19 @@ namespace ChemistryBasics
     public partial class InitSettingsPanel : UserControl
     {
 
-        string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼"};
+        private readonly string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼", "元素符号默写完美挑战", "化学式默写完美挑战" };
+        public const int intPerfectChallengeProblemCount = 20;
+        public EventHandler? BtnStartClick;
 
         public InitSettingsPanel(int mode)
         {
             InitializeComponent();
             lblMode.Text = strModeNames[mode];
+            if(mode == 2 || mode == 3)
+            {
+                numProblemCount.Enabled = false;
+                numProblemCount.Value = intPerfectChallengeProblemCount;
+            }
         }
 
         private void InitSettingsPanel_Load(object sender, EventArgs e)
@@ -26,13 +33,11 @@ namespace ChemistryBasics
             
         }
 
-        public EventHandler BtnStartClick;
-
         private void btnStart_Click(object sender, EventArgs e)
         {
             if(BtnStartClick != null)
             {
-                BtnStartClick(this, e);
+                BtnStartClick(this, EventArgs.Empty);
             }
         }
 

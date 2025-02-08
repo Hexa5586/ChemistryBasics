@@ -15,10 +15,10 @@ namespace ChemistryBasics
     {
 
         PrivateFontCollection pfc = new PrivateFontCollection();
-        string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼" };
-        String[] ranks = { "S", "A⁺", "A", "B⁺", "B", "C" };
-        int[] rank_borders = { 100, 90, 80, 70, 60, 0 };
-        Color[] rank_colors =
+        private readonly string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼", "元素符号默写完美挑战", "化学式默写完美挑战" };
+        private readonly string[] ranks = { "S", "A⁺", "A", "B⁺", "B", "C" };
+        private readonly int[] rank_borders = { 100, 90, 80, 70, 60, 0 };
+        private readonly Color[] rank_colors =
         {
             Color.FromArgb(246, 199, 32),
             Color.FromArgb(246, 31, 31),
@@ -27,6 +27,7 @@ namespace ChemistryBasics
             Color.FromArgb(36, 218, 64),
             Color.FromArgb(127, 127, 127)
         };
+        private readonly int[] achievement_fontsizes = { 76, 52 };
         public event EventHandler? BtnCloseClick;
         private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
 
@@ -43,7 +44,9 @@ namespace ChemistryBasics
             {
                 ;
             }
-            
+
+            lblAchievement.Font = new Font(pfc.Families[0], achievement_fontsizes[0], lblAchievement.Font.Style);
+            lblRank.Font = new Font(pfc.Families[0], lblRank.Font.Size, lblRank.Font.Style);
 
             lblMode.Text = strModeNames[mode];
             lblCorrectnTotal.Text = correct_answer_cnt.ToString() + "/" + total_cnt.ToString();
@@ -56,6 +59,49 @@ namespace ChemistryBasics
                     dataErrors.Rows.Add(err.Item1, err.Item2, err.Item3);
                 }
             }
+        }
+
+        public ResultPanel(int mode, bool defeated, TimeSpan time, List<Tuple<string, string, string>>? errors = null)
+        {
+            InitializeComponent();
+
+            try
+            {
+                pfc.AddFontFile("unispace bd.ttf");
+            }
+            catch (Exception)
+            {
+                ;
+            }
+
+            lblAchievement.Font = new Font(pfc.Families[0], achievement_fontsizes[1], lblAchievement.Font.Style);
+            lblRank.Font = new Font(pfc.Families[0], lblRank.Font.Size, lblRank.Font.Style);
+
+            if (defeated)
+            {
+                lblMode.Text = strModeNames[mode];
+                lblCorrectnTotal.Text = "回答错误，挑战失败";
+                lblAchievement.Text = time.Minutes.ToString("D2") + ":" + time.Seconds.ToString("D2") + "." + time.Milliseconds.ToString("D3");
+                lblRank.Text = "C";
+                lblRank.ForeColor = Color.FromArgb(127, 127, 127);
+                if (errors != null)
+                {
+                    foreach (Tuple<string, string, string> err in errors)
+                    {
+                        dataErrors.Rows.Add(err.Item1, err.Item2, err.Item3);
+                    }
+                }
+            }
+
+            else
+            {
+                lblMode.Text = strModeNames[mode];
+                lblCorrectnTotal.Text = "挑战成功";
+                lblAchievement.Text = time.Minutes.ToString("D2") + ":" + time.Seconds.ToString("D2") + "." + time.Milliseconds.ToString("D3");
+                lblRank.Text = "S";
+                lblRank.ForeColor = Color.FromArgb(246, 199, 32);
+            }
+            
         }
 
         private void RecordInitialFontSizes(Control control)
@@ -81,7 +127,7 @@ namespace ChemistryBasics
                 (float)this.Height / this.MinimumSize.Height
             );
 
-            List<Control> controls = new List<Control> { lblAccuracy, lblRank };
+            List<Control> controls = new List<Control> { lblAchievement, lblRank };
             foreach (Control childControl in controls)
             {
                 if (initialFontSizes.ContainsKey(childControl))
@@ -98,7 +144,7 @@ namespace ChemistryBasics
 
         public void SetScore(double accuracy)
         {
-            lblAccuracy.Text = accuracy.ToString("F1") + "%";
+            lblAchievement.Text = accuracy.ToString("F1") + "%";
             for (int i = 0; i < 6; i++)
             {
                 if (accuracy >= rank_borders[i])
@@ -112,27 +158,12 @@ namespace ChemistryBasics
 
         private void ResultPanel_Load(object sender, EventArgs e)
         {
-            try
-            {
-                lblAccuracy.Font = new Font(pfc.Families[0], lblAccuracy.Font.Size, lblAccuracy.Font.Style);
-                lblRank.Font = new Font(pfc.Families[0], lblRank.Font.Size, lblRank.Font.Style);
-            }
-            catch (Exception)
-            {
-                ;
-            }
-            
             dataErrors.ClearSelection();
             RecordInitialFontSizes(this);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (BtnCloseClick != null)
-            {
-                BtnCloseClick(sender, e);
-            }
-
             this.Hide();
             this.Dispose();
         }

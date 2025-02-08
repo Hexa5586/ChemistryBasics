@@ -1,6 +1,6 @@
 ﻿namespace ChemistryBasics
 {
-    partial class GamePanel
+    partial class PerfectGamePanel
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -31,11 +31,10 @@
             tblpnlGame = new TableLayoutPanel();
             btnSubmit = new Sunny.UI.UIButton();
             tblpnlStatus = new TableLayoutPanel();
+            lbl1 = new Label();
             lbl2 = new Label();
             lblProgress = new Label();
-            lblAccuracy = new Label();
-            lbl1 = new Label();
-            lblAnswerStatus = new Label();
+            chronoTimer = new Sunny.UI.UILedStopwatch();
             tblpnlQuestion = new TableLayoutPanel();
             lbl3 = new Label();
             txtQuestion = new Sunny.UI.UITextBox();
@@ -65,7 +64,7 @@
             tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Percent, 62.5F));
             tblpnlGame.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             tblpnlGame.Size = new Size(1102, 1096);
-            tblpnlGame.TabIndex = 0;
+            tblpnlGame.TabIndex = 1;
             // 
             // btnSubmit
             // 
@@ -84,17 +83,15 @@
             // tblpnlStatus
             // 
             tblpnlStatus.BackColor = Color.FromArgb(243, 249, 255);
-            tblpnlStatus.ColumnCount = 5;
-            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2859163F));
-            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2859182F));
-            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42.8563271F));
-            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2859182F));
-            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2859182F));
+            tblpnlStatus.ColumnCount = 4;
+            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.38461F));
+            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 61.53846F));
+            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.0769234F));
+            tblpnlStatus.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 350F));
+            tblpnlStatus.Controls.Add(lbl1, 2, 0);
             tblpnlStatus.Controls.Add(lbl2, 0, 0);
             tblpnlStatus.Controls.Add(lblProgress, 1, 0);
-            tblpnlStatus.Controls.Add(lblAccuracy, 4, 0);
-            tblpnlStatus.Controls.Add(lbl1, 3, 0);
-            tblpnlStatus.Controls.Add(lblAnswerStatus, 2, 0);
+            tblpnlStatus.Controls.Add(chronoTimer, 4, 0);
             tblpnlStatus.Dock = DockStyle.Fill;
             tblpnlStatus.Location = new Point(3, 3);
             tblpnlStatus.Name = "tblpnlStatus";
@@ -103,6 +100,18 @@
             tblpnlStatus.Size = new Size(1096, 64);
             tblpnlStatus.TabIndex = 0;
             // 
+            // lbl1
+            // 
+            lbl1.AutoSize = true;
+            lbl1.Dock = DockStyle.Fill;
+            lbl1.Font = new Font("Microsoft YaHei UI", 12F);
+            lbl1.Location = new Point(576, 0);
+            lbl1.Name = "lbl1";
+            lbl1.Size = new Size(166, 64);
+            lbl1.TabIndex = 6;
+            lbl1.Text = "已用时间";
+            lbl1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // lbl2
             // 
             lbl2.AutoSize = true;
@@ -110,7 +119,7 @@
             lbl2.Font = new Font("Microsoft YaHei UI", 12F);
             lbl2.Location = new Point(3, 0);
             lbl2.Name = "lbl2";
-            lbl2.Size = new Size(150, 64);
+            lbl2.Size = new Size(108, 64);
             lbl2.TabIndex = 1;
             lbl2.Text = "进度";
             lbl2.TextAlign = ContentAlignment.MiddleCenter;
@@ -119,49 +128,27 @@
             // 
             lblProgress.AutoSize = true;
             lblProgress.Dock = DockStyle.Fill;
-            lblProgress.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Bold);
-            lblProgress.Location = new Point(159, 0);
+            lblProgress.Font = new Font("Microsoft YaHei UI", 12F);
+            lblProgress.Location = new Point(117, 0);
             lblProgress.Name = "lblProgress";
-            lblProgress.Size = new Size(150, 64);
+            lblProgress.Size = new Size(453, 64);
             lblProgress.TabIndex = 3;
             lblProgress.Text = "X/X";
             lblProgress.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // lblAccuracy
+            // chronoTimer
             // 
-            lblAccuracy.AutoSize = true;
-            lblAccuracy.Dock = DockStyle.Fill;
-            lblAccuracy.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Bold);
-            lblAccuracy.Location = new Point(940, 0);
-            lblAccuracy.Name = "lblAccuracy";
-            lblAccuracy.Size = new Size(153, 64);
-            lblAccuracy.TabIndex = 2;
-            lblAccuracy.Text = "XX.X%";
-            lblAccuracy.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lbl1
-            // 
-            lbl1.AutoSize = true;
-            lbl1.Dock = DockStyle.Fill;
-            lbl1.Font = new Font("Microsoft YaHei UI", 12F);
-            lbl1.Location = new Point(784, 0);
-            lbl1.Name = "lbl1";
-            lbl1.Size = new Size(150, 64);
-            lbl1.TabIndex = 0;
-            lbl1.Text = "正确率";
-            lbl1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblAnswerStatus
-            // 
-            lblAnswerStatus.AutoSize = true;
-            lblAnswerStatus.Dock = DockStyle.Fill;
-            lblAnswerStatus.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            lblAnswerStatus.Location = new Point(315, 0);
-            lblAnswerStatus.Name = "lblAnswerStatus";
-            lblAnswerStatus.Size = new Size(463, 64);
-            lblAnswerStatus.TabIndex = 4;
-            lblAnswerStatus.Text = "STATUS";
-            lblAnswerStatus.TextAlign = ContentAlignment.MiddleCenter;
+            chronoTimer.BackColor = Color.Black;
+            chronoTimer.CharCount = 9;
+            chronoTimer.Dock = DockStyle.Fill;
+            chronoTimer.ForeColor = Color.Lime;
+            chronoTimer.IntervalOn = 5;
+            chronoTimer.Location = new Point(748, 3);
+            chronoTimer.Name = "chronoTimer";
+            chronoTimer.ShowType = Sunny.UI.UILedStopwatch.TimeShowType.mmssfff;
+            chronoTimer.Size = new Size(345, 58);
+            chronoTimer.TabIndex = 5;
+            chronoTimer.Text = "00:00";
             // 
             // tblpnlQuestion
             // 
@@ -260,17 +247,16 @@
             lbl4.Text = "答案";
             lbl4.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // GamePanel
+            // PerfectGamePanel
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlGame);
-            DoubleBuffered = true;
             MinimumSize = new Size(1102, 1096);
-            Name = "GamePanel";
+            Name = "PerfectGamePanel";
             Size = new Size(1102, 1096);
-            Load += GamePanel_Load;
-            Resize += GamePanel_Resize;
+            Load += PerfectChallengeGamePanel_Load;
+            Resize += PerfectChallengeGamePanel_Resize;
             tblpnlGame.ResumeLayout(false);
             tblpnlStatus.ResumeLayout(false);
             tblpnlStatus.PerformLayout();
@@ -284,18 +270,17 @@
         #endregion
 
         private TableLayoutPanel tblpnlGame;
-        private TableLayoutPanel tblpnlStatus;
-        private TableLayoutPanel tblpnlQuestion;
-        private TableLayoutPanel tblpnlAnswer;
-        private Label lbl1;
-        private Label lbl2;
-        private Label lbl3;
-        private Label lbl4;
-        private Label lblAccuracy;
-        private Label lblProgress;
-        private Sunny.UI.UITextBox txtAnswer;
         private Sunny.UI.UIButton btnSubmit;
-        private Label lblAnswerStatus;
+        private TableLayoutPanel tblpnlStatus;
+        private Label lbl2;
+        private Label lblProgress;
+        private TableLayoutPanel tblpnlQuestion;
+        private Label lbl3;
         private Sunny.UI.UITextBox txtQuestion;
+        private TableLayoutPanel tblpnlAnswer;
+        private Sunny.UI.UITextBox txtAnswer;
+        private Label lbl4;
+        private Sunny.UI.UILedStopwatch chronoTimer;
+        private Label lbl1;
     }
 }

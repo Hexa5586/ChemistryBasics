@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
 using Sunny.UI;
 
@@ -16,21 +17,26 @@ namespace ChemistryBasics
     public partial class MainWindow : UIForm
     {
         private readonly string[] questionPaths = { "elements.json", "formulas.json" };
-        private readonly Dictionary<string, string>[] dictQnA = { new Dictionary<string, string>(),
+        private readonly string[] rankingsPaths = { "elements_rankings.json", "formulas_rankings.json" };
+        
+        private Dictionary<string, string>[] dictQnA = { new Dictionary<string, string>(),
                                                          new Dictionary<string, string>()};
         private readonly string[] strAlerts =
         {
             @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的元素中文名称写出对应的元素符号；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案。}",
             @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的物质中文名称写出对应的化学式（有机物的要求会特别注明）；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案；\par  3. 数字 \cf2 \b 直接输入 \b0 \cf0 即可，会自动转换为下标形式；\par  4. 请使用 \cf1 \b 英文输入法 \b0 \cf0 ，使用中文符号会导致判错。}",
-        };
+            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的元素中文名称写出对应的元素符号；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案；\par  3. 数字 \cf2 \b 直接输入 \b0 \cf0 即可，会自动转换为下标形式；\par  4. 请使用 \cf1 \b 英文输入法 \b0 \cf0 ，使用中文符号会导致判错；\par  5. 完美挑战模式共20题，要求 \cf1 \b 全部做答正确 \b0 \cf0 方可按完成时间计入排名，若出现作答错误则直接中断答题。}",
+            @"{\rtf1\ansi\ansicpg936{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;} \fs50 \par \b  说明： \fs35 \b0 \par  1. 请根据给定的物质中文名称写出对应的化学式（有机物的要求会特别注明）；\par  2. 请注意 \cf1 \b 区分大小写 \b0 \cf0 。混淆大小写将会被判为错误答案；\par  3. 数字 \cf2 \b 直接输入 \b0 \cf0 即可，会自动转换为下标形式；\par  4. 请使用 \cf1 \b 英文输入法 \b0 \cf0 ，使用中文符号会导致判错；\par  5. 完美挑战模式共20题，要求 \cf1 \b 全部做答正确 \b0 \cf0 方可按完成时间计入排名，若出现作答错误则直接中断答题。}",
 
+        };
 
         private readonly Color colorSelected = Color.FromArgb(40, 0, 0, 0);
 
         private int intGameStatus = -1;
         private List<int> lstCurrentQuestionNums = new List<int>();
-        private GamePanel? ActivePanel = null;
-        private List<Control> ActiveTempPanels = new List<Control>();
+        private GamePanel? ActiveGamePanel = null;
+        private PerfectGamePanel? ActivePerfectGamePanel = null;
+        private List<Control> ActivePanels = new List<Control>();
         private int btnSubmitCounter = 0;
         private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
 
@@ -49,8 +55,10 @@ namespace ChemistryBasics
             btnFormulaSave.Enabled = false;
             RecordInitialFontSizes(this);
 
-            ElementPanel.Reset();
-            FormulaPanel.Reset();
+            /*
+            Form test = new Test();
+            test.Show();
+            */
         }
         private void RecordInitialFontSizes(Control control)
         {
@@ -107,7 +115,44 @@ namespace ChemistryBasics
                 }
                 
             }
+        }
 
+        private void AddRankingsData(int mode, string name, string time)
+        {
+            if (!File.Exists(rankingsPaths[mode]))
+            {
+                FileStream fs = File.Create(rankingsPaths[mode]);
+                fs.Dispose();
+            }
+            string strSerializedRankings = File.ReadAllText(rankingsPaths[mode]);
+            SortedDictionary<string, string>? rankings = 
+                JsonConvert.DeserializeObject<SortedDictionary<string, string>>(strSerializedRankings);
+
+            if (rankings == null)
+            {
+                rankings = new SortedDictionary<string, string>();
+            }
+            
+            rankings.Add(time, name);
+            string? strNewSerializedRankings = JsonConvert.SerializeObject(rankings);
+
+            if(strNewSerializedRankings != null)
+            {
+                File.WriteAllText(rankingsPaths[mode], strNewSerializedRankings);
+            }
+
+        }
+
+        public void ClearActivePanels()
+        {
+            foreach (Control pnl in ActivePanels)
+            {
+                pnl.Hide();
+                pnl.Dispose();
+            }
+            ActivePanels.Clear();
+            
+            return;
         }
 
         private string Dict2Csv(Dictionary<string, string>? dict)
@@ -166,127 +211,16 @@ namespace ChemistryBasics
             return JsonConvert.SerializeObject(dict);
         }
 
-        private void InitSettingsPanel_BtnStart_Click(object? sender, EventArgs e)
-        {
-            InitSettingsPanel? ActiveInitPanel = sender as InitSettingsPanel;
-            if (ActiveInitPanel == null)
-                return;
-
-            int totalProblemCnt = ActiveInitPanel.TotalProblemCount;
-            if(totalProblemCnt == 0)
-            {
-                MessageBox.Show("问题总数不可为零。请于设置页面确认题库非空。", "提示", 
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            ActiveInitPanel.Dispose();
-            ActiveTempPanels.Clear();
-
-            if (intGameStatus == 0)
-            {
-                ActivePanel = ElementPanel;
-            }
-            else if (intGameStatus == 1)
-            {
-                ActivePanel = FormulaPanel;
-            }
-            else
-            {
-                return;
-            }
-
-            GameInit(totalProblemCnt);
-
-        }
-
-        private void GameInit(int totalProblemCnt)
-        {
-            if (ActivePanel == null)
-            {
-                return;
-            }
-
-            ActivePanel.TotalProblemCount = totalProblemCnt;
-
-            Random rand = new Random();
-            HashSet<int> colCurrentQuestionNums = new HashSet<int>();
-            while (colCurrentQuestionNums.Count != totalProblemCnt)
-            {
-                colCurrentQuestionNums.Add(rand.Next() % dictQnA[intGameStatus].Count);
-            }
-            lstCurrentQuestionNums = new List<int>(colCurrentQuestionNums);
-
-            ActivePanel.FinishedProblemCount = 0;
-            ActivePanel.QuestionString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Key;
-            ActivePanel.CorrectAnswerString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Value;
-            ActivePanel.FocusOnTextBox();
-        }
-        private void GamePanel_BtnSubmitClick(object? sender, EventArgs e)
-        {
-            if(ActivePanel != null)
-            {
-                if ((++btnSubmitCounter) % 2 == 1)
-                {
-                    if (ActivePanel.IsAnswerCorrect())
-                    {
-                        ActivePanel.SetAnswerStatus(1);
-                        ActivePanel.CorrectAnswerCount++;
-                    }
-                    else
-                    {
-                        ActivePanel.RecordAsError();
-                        ActivePanel.SetAnswerStatus(-1);
-                    }
-
-                    ActivePanel.FinishedProblemCount++;
-                }
-                else
-                {
-                    ActivePanel.SetAnswerStatus(0);
-
-                    if (ActivePanel.FinishedProblemCount >= ActivePanel.TotalProblemCount)
-                    {
-                        //tbctrlMain.Hide();
-                        //MessageBox.Show("正确率：" + ActivePanel.GetCurrentAccuracy().ToString() + "%");
-                        ResultPanel respnl = new ResultPanel(ActivePanel.Mode, ActivePanel.CorrectAnswerCount, ActivePanel.TotalProblemCount,
-                                                             ActivePanel.errors);
-                        tbctrlMain.TabPages[ActivePanel.Mode].Controls.Add(respnl);
-                        respnl.Dock = DockStyle.Fill;
-                        respnl.BtnCloseClick += ResultPanel_BtnClose_Click;
-                        respnl.BringToFront();
-                        respnl.Show();
-                        ActiveTempPanels.Add(respnl);
-
-                        if (ActivePanel != null)
-                        {
-                            ActivePanel.Reset();
-                            btnSubmitCounter = 0;
-                        }
-                        ActivePanel = null;
-                        return;
-                    }
-
-                    ActivePanel.QuestionString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Key;
-                    ActivePanel.CorrectAnswerString = dictQnA[intGameStatus].ElementAt(lstCurrentQuestionNums[ActivePanel.FinishedProblemCount]).Value;
-                }
-            }
-            else
-            {
-                MessageBox.Show("当前没有正在运行的GamePanel.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-
-        }
-
         private void TabButton_Click(object sender, EventArgs e)
         {
+            ActiveGamePanel = null;
+            ActivePerfectGamePanel = null;
             UIButton? clickedBtn = sender as UIButton;
             if (clickedBtn != null)
             {
                 tbctrlMain.SelectTab(clickedBtn.TabIndex);
                 tbctrlMain.Show();
-                int mode = tbctrlMain.SelectedIndex;
+                int selected_item = tbctrlMain.SelectedIndex;
 
                 foreach (Control con in tblpnlTab.Controls)
                 {
@@ -303,33 +237,278 @@ namespace ChemistryBasics
 
                     }
                 }
-
-                if (mode != 2)
+                if (selected_item == 3)
                 {
-                    ReadQnAData();
-                    foreach (Control pnl in ActiveTempPanels)
-                    {
-                        pnl.Dispose();
-                    }
-                    ActiveTempPanels.Clear();
+                    return;
+                }
 
-                    InitSettingsPanel initpnl = new InitSettingsPanel(mode);
-                    ActiveTempPanels.Add(initpnl);
+                ReadQnAData();
+                ClearActivePanels();
 
-                    tbctrlMain.TabPages[mode].Controls.Add(initpnl);
+
+                if (selected_item == 0 || selected_item == 1)
+                {
+                    intGameStatus = selected_item;
+                    GamePanel gmpnl = new GamePanel(selected_item);
+                    ActivePanels.Add(gmpnl);
+                    ActiveGamePanel = gmpnl;
+
+                    tbctrlMain.TabPages[selected_item].Controls.Add(gmpnl);
+                    gmpnl.Dock = DockStyle.Fill;
+                    gmpnl.BtnSubmitClick += GamePanel_BtnSubmitClick;
+                    gmpnl.Show();
+
+                    InitSettingsPanel initpnl = new InitSettingsPanel(selected_item);
+                    ActivePanels.Add(initpnl);
+
+                    tbctrlMain.TabPages[selected_item].Controls.Add(initpnl);
                     initpnl.Dock = DockStyle.Fill;
-                    initpnl.AlertString = strAlerts[mode];
-                    initpnl.MaximumCount = dictQnA[mode].Count;
+                    initpnl.AlertString = strAlerts[selected_item];
+                    initpnl.MaximumCount = dictQnA[selected_item].Count;
                     initpnl.BringToFront();
                     initpnl.Show();
 
-                    intGameStatus = mode;
                     initpnl.BtnStartClick += InitSettingsPanel_BtnStart_Click;
                     lstCurrentQuestionNums.Clear();
+
+                }
+
+                else if (selected_item == 2)
+                {
+                    PerfectGamePanel pgmpnl = new PerfectGamePanel(selected_item);
+                    ActivePanels.Add(pgmpnl);
+                    ActivePerfectGamePanel = pgmpnl;
+
+                    tbctrlMain.TabPages[selected_item].Controls.Add(pgmpnl);
+                    pgmpnl.Dock = DockStyle.Fill;
+                    pgmpnl.BtnSubmitClick += PerfectGamePanel_BtnSubmitClick;
+                    pgmpnl.Show();
+
+                    PerfectRankingPanel prkspnl = new PerfectRankingPanel();
+                    ActivePanels.Add(prkspnl);
+
+                    tbctrlMain.TabPages[selected_item].Controls.Add(prkspnl);
+                    prkspnl.Dock = DockStyle.Fill;
+                    prkspnl.BtnStartClick += PerfectRankingPanel_BtnStart_Click;
+                    prkspnl.BringToFront();
+                    prkspnl.Show();
+
                 }
 
             }
         }
+
+        private void PerfectRankingPanel_BtnStart_Click(object? sender, EventArgs e)
+        {
+            PerfectRankingPanel? prkspnl = sender as PerfectRankingPanel;
+
+            if (prkspnl != null && ActivePerfectGamePanel != null)
+            {
+                if (dictQnA[prkspnl.SelectedMode].Count < InitSettingsPanel.intPerfectChallengeProblemCount)
+                {
+                    MessageBox.Show("问题总数不足" + InitSettingsPanel.intPerfectChallengeProblemCount.ToString() + 
+                            "。请于设置页面补充题库。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                prkspnl.Dispose();
+                ActivePerfectGamePanel.Mode = prkspnl.SelectedMode;
+                intGameStatus = 2 + prkspnl.SelectedMode;
+                InitSettingsPanel initpnl = new InitSettingsPanel(intGameStatus);
+                ActivePanels.Add(initpnl);
+
+                tbctrlMain.TabPages[2].Controls.Add(initpnl);
+                initpnl.Dock = DockStyle.Fill;
+                initpnl.AlertString = strAlerts[intGameStatus];
+                initpnl.BringToFront();
+                initpnl.Show();
+
+                initpnl.BtnStartClick += InitSettingsPanel_BtnStart_Click;
+                lstCurrentQuestionNums.Clear();
+            }
+        }
+
+        private void InitSettingsPanel_BtnStart_Click(object? sender, EventArgs e)
+        {
+            InitSettingsPanel? ActiveInitPanel = sender as InitSettingsPanel;
+            if (ActiveInitPanel == null)
+                return;
+
+            int totalProblemCnt = ActiveInitPanel.TotalProblemCount;
+            if(totalProblemCnt == 0)
+            {
+                MessageBox.Show("问题总数不可为零。请于设置页面确认题库非空。", "提示", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            ActiveInitPanel.Dispose();
+
+            GameInit(totalProblemCnt);
+
+        }
+
+        private void GameInit(int totalProblemCnt)
+        {
+            if(ActiveGamePanel == null && ActivePerfectGamePanel == null)
+            {
+                return;
+            }
+
+            Random rand = new Random();
+            HashSet<int> colCurrentQuestionNums = new HashSet<int>();
+
+            if (ActiveGamePanel != null)
+            {
+                int QnAIndex = intGameStatus;
+                while (colCurrentQuestionNums.Count != totalProblemCnt)
+                {
+                    colCurrentQuestionNums.Add(rand.Next() % dictQnA[QnAIndex].Count);
+                }
+                lstCurrentQuestionNums = new List<int>(colCurrentQuestionNums);
+                ActiveGamePanel.TotalProblemCount = totalProblemCnt;
+                ActiveGamePanel.FinishedProblemCount = 0;
+                ActiveGamePanel.QuestionString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Key;
+                ActiveGamePanel.CorrectAnswerString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Value;
+                ActiveGamePanel.FocusOnTextBox();
+                
+            }
+
+            else if(ActivePerfectGamePanel != null)
+            {
+                int QnAIndex = intGameStatus - 2;
+                while (colCurrentQuestionNums.Count != totalProblemCnt)
+                {
+                    colCurrentQuestionNums.Add(rand.Next() % dictQnA[QnAIndex].Count);
+                }
+                lstCurrentQuestionNums = new List<int>(colCurrentQuestionNums);
+                ActivePerfectGamePanel.TotalProblemCount = totalProblemCnt;
+                ActivePerfectGamePanel.FinishedProblemCount = 0;
+                ActivePerfectGamePanel.QuestionString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Key;
+                ActivePerfectGamePanel.CorrectAnswerString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Value;
+                ActivePerfectGamePanel.FocusOnTextBox();
+                ActivePerfectGamePanel.TimerStart();
+            }
+            
+        }
+
+        private void GamePanel_BtnSubmitClick(object? sender, EventArgs e)
+        {
+            int QnAIndex = intGameStatus;
+            if (ActiveGamePanel != null)
+            {
+                if ((++btnSubmitCounter) % 2 == 1)
+                {
+                    if (ActiveGamePanel.IsAnswerCorrect())
+                    {
+                        ActiveGamePanel.SetAnswerStatus(1);
+                        ActiveGamePanel.CorrectAnswerCount++;
+                    }
+                    else
+                    {
+                        ActiveGamePanel.RecordAsError();
+                        ActiveGamePanel.SetAnswerStatus(-1);
+                    }
+
+                    ActiveGamePanel.FinishedProblemCount++;
+                }
+                else
+                {
+                    ActiveGamePanel.SetAnswerStatus(0);
+                    ActiveGamePanel.AnswerString = "";
+
+                    if (ActiveGamePanel.FinishedProblemCount >= ActiveGamePanel.TotalProblemCount)
+                    {
+                        ResultPanel respnl = new ResultPanel(ActiveGamePanel.Mode, ActiveGamePanel.CorrectAnswerCount, ActiveGamePanel.TotalProblemCount,
+                                                             ActiveGamePanel.errors);
+                        ClearActivePanels();
+                        tbctrlMain.TabPages[ActiveGamePanel.Mode].Controls.Add(respnl);
+                        respnl.Dock = DockStyle.Fill;
+                        respnl.BringToFront();
+                        respnl.Show();
+                        ActivePanels.Add(respnl);
+
+                        ActiveGamePanel.Reset();
+                        btnSubmitCounter = 0;
+                        ActiveGamePanel = null;
+                        return;
+                    }
+
+                    ActiveGamePanel.QuestionString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[ActiveGamePanel.FinishedProblemCount]).Key;
+                    ActiveGamePanel.CorrectAnswerString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[ActiveGamePanel.FinishedProblemCount]).Value;
+                }
+            }
+            else
+            {
+                MessageBox.Show("当前没有正在运行的GamePanel.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+        }
+
+        private void PerfectGamePanel_BtnSubmitClick(object? sender, EventArgs e)
+        {
+            int QnAIndex = intGameStatus - 2;
+            if(ActivePerfectGamePanel != null)
+            {
+                if (ActivePerfectGamePanel.IsAnswerCorrect())
+                {
+                    ActivePerfectGamePanel.AnswerString = "";
+                    ActivePerfectGamePanel.FinishedProblemCount++;
+                    if (ActivePerfectGamePanel.FinishedProblemCount >= ActivePerfectGamePanel.TotalProblemCount)
+                    {
+                        ActivePerfectGamePanel.TimerStop();
+                        TimeSpan tpTimeUsed = ActivePerfectGamePanel.TimeUsed;
+                        ResultPanel respnl = new ResultPanel(intGameStatus, false, tpTimeUsed);
+                        ClearActivePanels();
+                        tbctrlMain.TabPages[2].Controls.Add(respnl);
+                        respnl.Dock = DockStyle.Fill;
+                        respnl.BringToFront();
+                        respnl.Show();
+                        ActivePanels.Add(respnl);
+
+                        RecordDialog rdlg = new RecordDialog();
+                        rdlg.ShowDialog();
+                        if(rdlg.DialogResult == DialogResult.OK)
+                        {
+                            string strTimeUsed = tpTimeUsed.Minutes.ToString("D2") + ":" + tpTimeUsed.Seconds.ToString("D2")
+                                + "." + tpTimeUsed.Milliseconds.ToString("D3");
+                            AddRankingsData(QnAIndex, rdlg.GetName(), strTimeUsed);
+                        }
+
+                        ActivePerfectGamePanel.Reset();
+                        btnSubmitCounter = 0;
+                        ActiveGamePanel = null;
+                        return;
+                    }
+
+                    //MessageBox.Show(ActivePerfectGamePanel.FinishedProblemCount.ToString());
+                    ActivePerfectGamePanel.QuestionString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[ActivePerfectGamePanel.FinishedProblemCount]).Key;
+                    ActivePerfectGamePanel.CorrectAnswerString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[ActivePerfectGamePanel.FinishedProblemCount]).Value;
+                }
+                else
+                {
+                    ActivePerfectGamePanel.TimerStop();
+                    ActivePerfectGamePanel.RecordAsError();
+                    ResultPanel respnl = new ResultPanel(intGameStatus, true, ActivePerfectGamePanel.TimeUsed, ActivePerfectGamePanel.errors);
+                    ClearActivePanels();
+                    tbctrlMain.TabPages[2].Controls.Add(respnl);
+                    respnl.Dock = DockStyle.Fill;
+                    respnl.BringToFront();
+                    respnl.Show();
+                    ActivePanels.Add(respnl);
+
+                    ActivePerfectGamePanel.Reset();
+                    btnSubmitCounter = 0;
+                    ActiveGamePanel = null;
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("当前没有正在运行的PerfectChallengeGamePanel.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        } 
 
         private void txtElementQnAs_TextChanged(object sender, EventArgs e)
         {
@@ -364,11 +543,6 @@ namespace ChemistryBasics
                 txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
                 btnFormulaSave.Enabled = false;
             }
-        }
-
-        private void ResultPanel_BtnClose_Click(object? sender, EventArgs e)
-        {
-            tbctrlMain.Hide();
         }
 
         private void main_Resize(object sender, EventArgs e)

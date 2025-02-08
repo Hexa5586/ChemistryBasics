@@ -39,7 +39,7 @@
             lblMode = new Label();
             lblCorrectnTotal = new Label();
             tblpnlScoreRank = new TableLayoutPanel();
-            lblAccuracy = new Label();
+            lblAchievement = new Label();
             lblRank = new Label();
             dataErrors = new Sunny.UI.UIDataGridView();
             dcolQuestion = new DataGridViewTextBoxColumn();
@@ -73,7 +73,7 @@
             // btnClose
             // 
             btnClose.Dock = DockStyle.Fill;
-            btnClose.Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            btnClose.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
             btnClose.Location = new Point(3, 1028);
             btnClose.MinimumSize = new Size(1, 1);
             btnClose.Name = "btnClose";
@@ -114,7 +114,7 @@
             // 
             lblCorrectnTotal.AutoSize = true;
             lblCorrectnTotal.Dock = DockStyle.Fill;
-            lblCorrectnTotal.Font = new Font("Microsoft YaHei UI", 15F);
+            lblCorrectnTotal.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 134);
             lblCorrectnTotal.Location = new Point(660, 0);
             lblCorrectnTotal.Name = "lblCorrectnTotal";
             lblCorrectnTotal.Size = new Size(433, 64);
@@ -127,7 +127,7 @@
             tblpnlScoreRank.ColumnCount = 2;
             tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
             tblpnlScoreRank.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
-            tblpnlScoreRank.Controls.Add(lblAccuracy, 0, 0);
+            tblpnlScoreRank.Controls.Add(lblAchievement, 0, 0);
             tblpnlScoreRank.Controls.Add(lblRank, 1, 0);
             tblpnlScoreRank.Dock = DockStyle.Fill;
             tblpnlScoreRank.Location = new Point(3, 73);
@@ -137,17 +137,17 @@
             tblpnlScoreRank.Size = new Size(1096, 376);
             tblpnlScoreRank.TabIndex = 2;
             // 
-            // lblAccuracy
+            // lblAchievement
             // 
-            lblAccuracy.AutoSize = true;
-            lblAccuracy.Dock = DockStyle.Fill;
-            lblAccuracy.Font = new Font("Unispace", 76F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblAccuracy.Location = new Point(3, 0);
-            lblAccuracy.Name = "lblAccuracy";
-            lblAccuracy.Size = new Size(706, 376);
-            lblAccuracy.TabIndex = 0;
-            lblAccuracy.Text = "XX.X%";
-            lblAccuracy.TextAlign = ContentAlignment.MiddleCenter;
+            lblAchievement.AutoSize = true;
+            lblAchievement.Dock = DockStyle.Fill;
+            lblAchievement.Font = new Font("Unispace", 76F, FontStyle.Bold);
+            lblAchievement.Location = new Point(3, 0);
+            lblAchievement.Name = "lblAchievement";
+            lblAchievement.Size = new Size(706, 376);
+            lblAchievement.TabIndex = 0;
+            lblAchievement.Text = "XX.X%";
+            lblAchievement.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblRank
             // 
@@ -229,7 +229,7 @@
             // dcolCorrectAnswer
             // 
             dcolCorrectAnswer.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dcolCorrectAnswer.HeaderText = "答案";
+            dcolCorrectAnswer.HeaderText = "正确答案";
             dcolCorrectAnswer.MinimumWidth = 8;
             dcolCorrectAnswer.Name = "dcolCorrectAnswer";
             dcolCorrectAnswer.ReadOnly = true;
@@ -237,7 +237,7 @@
             // dcolWrongAnswer
             // 
             dcolWrongAnswer.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dcolWrongAnswer.HeaderText = "错误答案";
+            dcolWrongAnswer.HeaderText = "你的答案";
             dcolWrongAnswer.MinimumWidth = 8;
             dcolWrongAnswer.Name = "dcolWrongAnswer";
             dcolWrongAnswer.ReadOnly = true;
@@ -268,12 +268,12 @@
         private TableLayoutPanel tblpnlTitle;
         private TableLayoutPanel tblpnlScoreRank;
         private Sunny.UI.UIDataGridView dataErrors;
+        private Label lblMode;
+        private Label lblCorrectnTotal;
+        private Label lblAchievement;
+        private Label lblRank;
         private DataGridViewTextBoxColumn dcolQuestion;
         private DataGridViewTextBoxColumn dcolCorrectAnswer;
         private DataGridViewTextBoxColumn dcolWrongAnswer;
-        private Label lblMode;
-        private Label lblCorrectnTotal;
-        private Label lblAccuracy;
-        private Label lblRank;
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ChemistryBasics
 {
-    public partial class GamePanel : UserControl
+    public partial class PerfectGamePanel : UserControl
     {
         PrivateFontCollection pfc = new PrivateFontCollection();
         private int intTime = 0;
@@ -26,7 +26,7 @@ namespace ChemistryBasics
 
         public List<Tuple<string, string, string>> errors = new List<Tuple<string, string, string>>();
 
-        public GamePanel(int mode=0)
+        public PerfectGamePanel(int mode = 0)
         {
             InitializeComponent();
             this.Mode = mode;
@@ -40,7 +40,17 @@ namespace ChemistryBasics
             }
         }
 
-        private void GamePanel_Load(object sender, EventArgs e)
+        public void TimerStart()
+        {
+            this.chronoTimer.Start();
+        }
+
+        public void TimerStop()
+        {
+            this.chronoTimer.Stop();
+        }
+
+        private void PerfectChallengeGamePanel_Load(object sender, EventArgs e)
         {
             this.Reset();
             try
@@ -51,7 +61,7 @@ namespace ChemistryBasics
             {
                 ;
             }
-            
+
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -93,7 +103,7 @@ namespace ChemistryBasics
             }
         }
 
-        private void GamePanel_Resize(object sender, EventArgs e)
+        private void PerfectChallengeGamePanel_Resize(object sender, EventArgs e)
         {
             ScaleFonts(this);
         }
@@ -169,45 +179,9 @@ namespace ChemistryBasics
             this.txtAnswer.Focus();
         }
 
-        public void SetAnswerStatus(int status)
-        {
-            if (status == 0)
-            {
-                lblAnswerStatus.ForeColor = Color.Black;
-                lblAnswerStatus.Text = "请作答";
-                txtAnswer.FillColor = Color.White;
-                tblpnlAnswer.BackColor = Color.White;
-            }
-            else if (status == 1)
-            {
-                lblAnswerStatus.ForeColor = Color.Green;
-                lblAnswerStatus.Text = "恭喜你，答对了！";
-                txtAnswer.FillColor = Color.LightGreen;
-                tblpnlAnswer.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                lblAnswerStatus.ForeColor = Color.Red;
-                lblAnswerStatus.Text = "很遗憾，答错了。";
-                txtAnswer.FillColor = Color.LightCoral;
-                tblpnlAnswer.BackColor = Color.LightCoral;
-                txtAnswer.Text = this.CorrectAnswerString;
-            }
-        }
-
         public bool IsAnswerCorrect()
         {
             return this.strCorrectAnswer.Trim() == this.txtAnswer.Text.Trim();
-        }
-
-        public double GetCurrentAccuracy()
-        {
-            if (intFinishedProblemCnt == 0)
-            {
-                return 100.00;
-            }
-            double accuracy = intCorrectProblemCnt * 100.0 / intFinishedProblemCnt;
-            return Math.Round(accuracy, 2);
         }
 
         [Browsable(true)]
@@ -295,20 +269,14 @@ namespace ChemistryBasics
             {
                 intFinishedProblemCnt = value;
                 this.lblProgress.Text = (intFinishedProblemCnt).ToString() + "/" + intTotalProblemCnt.ToString();
-                this.lblAccuracy.Text = this.GetCurrentAccuracy().ToString("F1") + "%";
             }
         }
-
-        public int CorrectAnswerCount
+        
+        public TimeSpan TimeUsed
         {
             get
             {
-                return intCorrectProblemCnt;
-            }
-
-            set
-            {
-                intCorrectProblemCnt = value;
+                return this.chronoTimer.TimeSpan;
             }
         }
 
