@@ -67,17 +67,17 @@
             tblpnlRanks.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblpnlRanks.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             tblpnlRanks.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlRanks.Size = new Size(1102, 1096);
+            tblpnlRanks.Size = new Size(921, 902);
             tblpnlRanks.TabIndex = 0;
             // 
             // btnStart
             // 
             btnStart.Dock = DockStyle.Fill;
             btnStart.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            btnStart.Location = new Point(3, 1029);
+            btnStart.Location = new Point(3, 835);
             btnStart.MinimumSize = new Size(1, 1);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(1096, 64);
+            btnStart.Size = new Size(915, 64);
             btnStart.TabIndex = 6;
             btnStart.Text = "挑战准备";
             btnStart.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -95,7 +95,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1096, 64);
+            tableLayoutPanel1.Size = new Size(915, 64);
             tableLayoutPanel1.TabIndex = 7;
             // 
             // lbl2
@@ -105,7 +105,7 @@
             lbl2.Font = new Font("Microsoft YaHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
             lbl2.Location = new Point(3, 0);
             lbl2.Name = "lbl2";
-            lbl2.Size = new Size(870, 64);
+            lbl2.Size = new Size(726, 64);
             lbl2.TabIndex = 0;
             lbl2.Text = "完美挑战模式排行榜";
             lbl2.TextAlign = ContentAlignment.MiddleCenter;
@@ -114,10 +114,10 @@
             // 
             btnRankingsClear.Dock = DockStyle.Fill;
             btnRankingsClear.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            btnRankingsClear.Location = new Point(879, 3);
+            btnRankingsClear.Location = new Point(735, 3);
             btnRankingsClear.MinimumSize = new Size(1, 1);
             btnRankingsClear.Name = "btnRankingsClear";
-            btnRankingsClear.Size = new Size(214, 58);
+            btnRankingsClear.Size = new Size(177, 58);
             btnRankingsClear.TabIndex = 1;
             btnRankingsClear.Text = "清空排行榜";
             btnRankingsClear.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -131,11 +131,11 @@
             tblpnlMode.Controls.Add(lbl1, 0, 0);
             tblpnlMode.Controls.Add(cmbMode, 1, 0);
             tblpnlMode.Dock = DockStyle.Fill;
-            tblpnlMode.Location = new Point(3, 959);
+            tblpnlMode.Location = new Point(3, 765);
             tblpnlMode.Name = "tblpnlMode";
             tblpnlMode.RowCount = 1;
             tblpnlMode.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblpnlMode.Size = new Size(1096, 64);
+            tblpnlMode.Size = new Size(915, 64);
             tblpnlMode.TabIndex = 5;
             // 
             // lbl1
@@ -146,7 +146,7 @@
             lbl1.Font = new Font("Microsoft YaHei UI", 12F);
             lbl1.Location = new Point(3, 0);
             lbl1.Name = "lbl1";
-            lbl1.Size = new Size(213, 64);
+            lbl1.Size = new Size(177, 64);
             lbl1.TabIndex = 0;
             lbl1.Text = "模式";
             lbl1.TextAlign = ContentAlignment.MiddleCenter;
@@ -162,12 +162,12 @@
             cmbMode.ItemHoverColor = Color.FromArgb(155, 200, 255);
             cmbMode.Items.AddRange(new object[] { "元素符号", "化学式" });
             cmbMode.ItemSelectForeColor = Color.FromArgb(235, 243, 255);
-            cmbMode.Location = new Point(223, 5);
+            cmbMode.Location = new Point(187, 5);
             cmbMode.Margin = new Padding(4, 5, 4, 5);
             cmbMode.MinimumSize = new Size(63, 0);
             cmbMode.Name = "cmbMode";
             cmbMode.Padding = new Padding(0, 0, 30, 2);
-            cmbMode.Size = new Size(869, 54);
+            cmbMode.Size = new Size(724, 54);
             cmbMode.SymbolSize = 24;
             cmbMode.TabIndex = 1;
             cmbMode.TextAlignment = ContentAlignment.MiddleLeft;
@@ -227,7 +227,7 @@
             dataRanks.RowTemplate.Height = 50;
             dataRanks.ScrollMode = Sunny.UI.UIDataGridView.UIDataGridViewScrollMode.Page;
             dataRanks.SelectedIndex = -1;
-            dataRanks.Size = new Size(1096, 880);
+            dataRanks.Size = new Size(915, 686);
             dataRanks.StripeOddColor = Color.FromArgb(235, 243, 255);
             dataRanks.TabIndex = 4;
             // 
@@ -260,9 +260,9 @@
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlRanks);
-            MinimumSize = new Size(1102, 1096);
+            MinimumSize = new Size(921, 902);
             Name = "PerfectRankingPanel";
-            Size = new Size(1102, 1096);
+            Size = new Size(921, 902);
             Load += PerfectRankingPanel_Load;
             tblpnlRanks.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);

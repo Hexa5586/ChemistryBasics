@@ -67,17 +67,17 @@
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tblpnlResult.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlResult.Size = new Size(1102, 1096);
+            tblpnlResult.Size = new Size(921, 902);
             tblpnlResult.TabIndex = 0;
             // 
             // btnClose
             // 
             btnClose.Dock = DockStyle.Fill;
             btnClose.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            btnClose.Location = new Point(3, 1028);
+            btnClose.Location = new Point(3, 834);
             btnClose.MinimumSize = new Size(1, 1);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(1096, 65);
+            btnClose.Size = new Size(915, 65);
             btnClose.TabIndex = 0;
             btnClose.Text = "关闭";
             btnClose.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -95,7 +95,7 @@
             tblpnlTitle.Name = "tblpnlTitle";
             tblpnlTitle.RowCount = 1;
             tblpnlTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblpnlTitle.Size = new Size(1096, 64);
+            tblpnlTitle.Size = new Size(915, 64);
             tblpnlTitle.TabIndex = 1;
             // 
             // lblMode
@@ -105,7 +105,7 @@
             lblMode.Font = new Font("Microsoft YaHei UI", 14F);
             lblMode.Location = new Point(3, 0);
             lblMode.Name = "lblMode";
-            lblMode.Size = new Size(651, 64);
+            lblMode.Size = new Size(543, 64);
             lblMode.TabIndex = 0;
             lblMode.Text = "MODE";
             lblMode.TextAlign = ContentAlignment.MiddleCenter;
@@ -115,9 +115,9 @@
             lblCorrectnTotal.AutoSize = true;
             lblCorrectnTotal.Dock = DockStyle.Fill;
             lblCorrectnTotal.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            lblCorrectnTotal.Location = new Point(660, 0);
+            lblCorrectnTotal.Location = new Point(552, 0);
             lblCorrectnTotal.Name = "lblCorrectnTotal";
-            lblCorrectnTotal.Size = new Size(433, 64);
+            lblCorrectnTotal.Size = new Size(360, 64);
             lblCorrectnTotal.TabIndex = 1;
             lblCorrectnTotal.Text = "X/X";
             lblCorrectnTotal.TextAlign = ContentAlignment.MiddleCenter;
@@ -134,29 +134,29 @@
             tblpnlScoreRank.Name = "tblpnlScoreRank";
             tblpnlScoreRank.RowCount = 1;
             tblpnlScoreRank.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblpnlScoreRank.Size = new Size(1096, 376);
+            tblpnlScoreRank.Size = new Size(915, 298);
             tblpnlScoreRank.TabIndex = 2;
             // 
             // lblAchievement
             // 
             lblAchievement.AutoSize = true;
             lblAchievement.Dock = DockStyle.Fill;
-            lblAchievement.Font = new Font("Unispace", 76F, FontStyle.Bold);
+            lblAchievement.Font = new Font("Unispace", 60F, FontStyle.Bold);
             lblAchievement.Location = new Point(3, 0);
             lblAchievement.Name = "lblAchievement";
-            lblAchievement.Size = new Size(706, 376);
+            lblAchievement.Size = new Size(588, 298);
             lblAchievement.TabIndex = 0;
-            lblAchievement.Text = "XX.X%";
+            lblAchievement.Text = "100.0%";
             lblAchievement.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblRank
             // 
             lblRank.AutoSize = true;
             lblRank.Dock = DockStyle.Fill;
-            lblRank.Font = new Font("Unispace", 110F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblRank.Location = new Point(715, 0);
+            lblRank.Font = new Font("Unispace", 90F, FontStyle.Bold | FontStyle.Italic);
+            lblRank.Location = new Point(597, 0);
             lblRank.Name = "lblRank";
-            lblRank.Size = new Size(378, 376);
+            lblRank.Size = new Size(315, 298);
             lblRank.TabIndex = 1;
             lblRank.Text = "RA";
             lblRank.TextAlign = ContentAlignment.MiddleCenter;
@@ -194,7 +194,7 @@
             dataErrors.EnableHeadersVisualStyles = false;
             dataErrors.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
             dataErrors.GridColor = Color.FromArgb(80, 160, 255);
-            dataErrors.Location = new Point(3, 455);
+            dataErrors.Location = new Point(3, 377);
             dataErrors.MultiSelect = false;
             dataErrors.Name = "dataErrors";
             dataErrors.ReadOnly = true;
@@ -214,7 +214,7 @@
             dataErrors.RowTemplate.Height = 80;
             dataErrors.ScrollMode = Sunny.UI.UIDataGridView.UIDataGridViewScrollMode.Page;
             dataErrors.SelectedIndex = -1;
-            dataErrors.Size = new Size(1096, 567);
+            dataErrors.Size = new Size(915, 451);
             dataErrors.StripeOddColor = Color.FromArgb(235, 243, 255);
             dataErrors.TabIndex = 3;
             // 
@@ -247,9 +247,9 @@
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlResult);
-            MinimumSize = new Size(1102, 1096);
+            MinimumSize = new Size(921, 902);
             Name = "ResultPanel";
-            Size = new Size(1102, 1096);
+            Size = new Size(921, 902);
             Load += ResultPanel_Load;
             Resize += ResultPanel_Resize;
             tblpnlResult.ResumeLayout(false);

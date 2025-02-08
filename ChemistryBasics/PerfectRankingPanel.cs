@@ -14,7 +14,7 @@ namespace ChemistryBasics
 
     public partial class PerfectRankingPanel : UserControl
     {
-        private readonly string[] rankingsPaths = { "elements_rankings.json", "formulas_rankings.json" };
+        private readonly string[] rankingsPaths = { "elements_rks.json", "formulas_rks.json" };
         public event EventHandler? BtnStartClick;
 
         public PerfectRankingPanel()
@@ -44,15 +44,15 @@ namespace ChemistryBasics
                 fs.Dispose();
             }
             string strSerializedRankings = File.ReadAllText(rankingsPaths[mode]);
-            SortedDictionary<string, string>? dictRankings =
-                JsonConvert.DeserializeObject<SortedDictionary<string, string>>(strSerializedRankings);
+            Dictionary<string, string>? dictRankings =
+                JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedRankings);
 
             if (dictRankings != null)
             {
                 int index = 1;
                 foreach (KeyValuePair<string, string> par in dictRankings)
                 {
-                    dataRanks.Rows.Add(index, par.Value, par.Key);
+                    dataRanks.Rows.Add(index, par.Key, par.Value);
                     index++;
                 }
             }
@@ -66,13 +66,17 @@ namespace ChemistryBasics
 
         private void btnRankingsClear_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(rankingsPaths[cmbMode.SelectedIndex]))
+            if (MainWindow.Authenticate())
             {
-                FileStream fs = File.Create(rankingsPaths[cmbMode.SelectedIndex]);
-                fs.Dispose();
+                if (!File.Exists(rankingsPaths[cmbMode.SelectedIndex]))
+                {
+                    FileStream fs = File.Create(rankingsPaths[cmbMode.SelectedIndex]);
+                    fs.Dispose();
+                }
+                File.WriteAllText(rankingsPaths[cmbMode.SelectedIndex], "{}");
+                LoadRankingsData(cmbMode.SelectedIndex);
             }
-            File.WriteAllText(rankingsPaths[cmbMode.SelectedIndex], "{}");
-            LoadRankingsData(cmbMode.SelectedIndex);
+            
         }
 
         public int SelectedMode

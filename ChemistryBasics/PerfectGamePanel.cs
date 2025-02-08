@@ -16,7 +16,7 @@ namespace ChemistryBasics
     {
         PrivateFontCollection pfc = new PrivateFontCollection();
         private int intTime = 0;
-        private int intTotalProblemCnt = 0, intFinishedProblemCnt = 0, intCorrectProblemCnt = 0;
+        private int intTotalProblemCnt = 0, intFinishedProblemCnt = 0;
         private string strQuestion = "", strCorrectAnswer = "";
         private int intMode;
         private int btnSubmitCounter = 0;
@@ -61,6 +61,9 @@ namespace ChemistryBasics
             {
                 ;
             }
+            int IntervalOn_Width = (chronoTimer.Width - chronoTimer.IntervalH) / 54;
+            int IntervalOn_Height = (chronoTimer.Height - chronoTimer.IntervalV) / 7;
+            chronoTimer.IntervalOn = Math.Min(IntervalOn_Height, IntervalOn_Width);
 
         }
 
@@ -160,7 +163,7 @@ namespace ChemistryBasics
         }
         public void Reset()
         {
-            intTime = intTotalProblemCnt = intFinishedProblemCnt = intCorrectProblemCnt = 0;
+            intTime = intTotalProblemCnt = intFinishedProblemCnt = 0;
             strQuestion = strCorrectAnswer = "";
             txtAnswer.Text = txtQuestion.Text = "";
 

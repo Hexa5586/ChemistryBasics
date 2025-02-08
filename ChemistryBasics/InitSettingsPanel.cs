@@ -15,13 +15,15 @@ namespace ChemistryBasics
 
         private readonly string[] strModeNames = { "元素符号默写大比拼", "化学式默写大比拼", "元素符号默写完美挑战", "化学式默写完美挑战" };
         public const int intPerfectChallengeProblemCount = 20;
+        private int intMode;
         public EventHandler? BtnStartClick;
 
         public InitSettingsPanel(int mode)
         {
             InitializeComponent();
             lblMode.Text = strModeNames[mode];
-            if(mode == 2 || mode == 3)
+            intMode = mode;
+            if (mode == 2 || mode == 3)
             {
                 numProblemCount.Enabled = false;
                 numProblemCount.Value = intPerfectChallengeProblemCount;
@@ -30,16 +32,20 @@ namespace ChemistryBasics
 
         private void InitSettingsPanel_Load(object sender, EventArgs e)
         {
-            
+            if(intMode == 2 || intMode == 3)
+            {
+                btnStart.Focus();
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if(BtnStartClick != null)
+            if (BtnStartClick != null)
             {
                 BtnStartClick(this, EventArgs.Empty);
             }
         }
+
 
         public string? AlertString
         {
@@ -59,7 +65,7 @@ namespace ChemistryBasics
             {
                 return numProblemCount.Value;
             }
-            
+
         }
 
         public int MaximumCount

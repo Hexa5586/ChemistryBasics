@@ -55,7 +55,7 @@
             tblpnlInitSettings.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblpnlInitSettings.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             tblpnlInitSettings.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlInitSettings.Size = new Size(1100, 1100);
+            tblpnlInitSettings.Size = new Size(921, 902);
             tblpnlInitSettings.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -66,11 +66,11 @@
             tableLayoutPanel1.Controls.Add(lbl1, 0, 0);
             tableLayoutPanel1.Controls.Add(numProblemCount, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(3, 963);
+            tableLayoutPanel1.Location = new Point(3, 765);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1094, 64);
+            tableLayoutPanel1.Size = new Size(915, 64);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // lbl1
@@ -81,7 +81,7 @@
             lbl1.Font = new Font("Microsoft YaHei UI", 12F);
             lbl1.Location = new Point(3, 0);
             lbl1.Name = "lbl1";
-            lbl1.Size = new Size(212, 64);
+            lbl1.Size = new Size(177, 64);
             lbl1.TabIndex = 0;
             lbl1.Text = "题目数量";
             lbl1.TextAlign = ContentAlignment.MiddleCenter;
@@ -91,13 +91,13 @@
             numProblemCount.AutoSize = true;
             numProblemCount.Dock = DockStyle.Fill;
             numProblemCount.Font = new Font("微软雅黑", 12F);
-            numProblemCount.Location = new Point(222, 5);
+            numProblemCount.Location = new Point(187, 5);
             numProblemCount.Margin = new Padding(4, 5, 4, 5);
             numProblemCount.Minimum = 0;
             numProblemCount.MinimumSize = new Size(100, 0);
             numProblemCount.Name = "numProblemCount";
             numProblemCount.ShowText = false;
-            numProblemCount.Size = new Size(868, 54);
+            numProblemCount.Size = new Size(724, 54);
             numProblemCount.TabIndex = 1;
             numProblemCount.Text = "uiIntegerUpDown1";
             numProblemCount.TextAlignment = ContentAlignment.MiddleCenter;
@@ -111,7 +111,7 @@
             lblMode.Font = new Font("Microsoft YaHei UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 134);
             lblMode.Location = new Point(3, 0);
             lblMode.Name = "lblMode";
-            lblMode.Size = new Size(1094, 70);
+            lblMode.Size = new Size(915, 70);
             lblMode.TabIndex = 1;
             lblMode.Text = "MODE ZONE";
             lblMode.TextAlign = ContentAlignment.MiddleCenter;
@@ -120,10 +120,10 @@
             // 
             btnStart.Dock = DockStyle.Fill;
             btnStart.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            btnStart.Location = new Point(3, 1033);
+            btnStart.Location = new Point(3, 835);
             btnStart.MinimumSize = new Size(1, 1);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(1094, 64);
+            btnStart.Size = new Size(915, 64);
             btnStart.TabIndex = 3;
             btnStart.Text = "开始";
             btnStart.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -136,7 +136,7 @@
             rtxtAlert.Location = new Point(3, 73);
             rtxtAlert.Name = "rtxtAlert";
             rtxtAlert.ReadOnly = true;
-            rtxtAlert.Size = new Size(1094, 884);
+            rtxtAlert.Size = new Size(915, 686);
             rtxtAlert.TabIndex = 4;
             rtxtAlert.Text = "";
             // 
@@ -145,8 +145,9 @@
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tblpnlInitSettings);
+            MinimumSize = new Size(921, 902);
             Name = "InitSettingsPanel";
-            Size = new Size(1100, 1100);
+            Size = new Size(921, 902);
             Load += InitSettingsPanel_Load;
             tblpnlInitSettings.ResumeLayout(false);
             tblpnlInitSettings.PerformLayout();

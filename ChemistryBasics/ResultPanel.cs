@@ -27,8 +27,7 @@ namespace ChemistryBasics
             Color.FromArgb(36, 218, 64),
             Color.FromArgb(127, 127, 127)
         };
-        private readonly int[] achievement_fontsizes = { 76, 52 };
-        public event EventHandler? BtnCloseClick;
+        private readonly int[] achievement_fontsizes = { 60, 42 };
         private Dictionary<Control, float> initialFontSizes = new Dictionary<Control, float>();
 
         public ResultPanel(int mode, int correct_answer_cnt, int total_cnt, 

@@ -16,9 +16,10 @@ namespace ChemistryBasics
 
     public partial class MainWindow : UIForm
     {
-        private readonly string[] questionPaths = { "elements.json", "formulas.json" };
-        private readonly string[] rankingsPaths = { "elements_rankings.json", "formulas_rankings.json" };
-        
+        private readonly static string[] questionPaths = { "elements.json", "formulas.json" };
+        private readonly static string[] rankingsPaths = { "elements_rks.json", "formulas_rks.json" };
+        private readonly static string settingsPath = "settings.json";
+
         private Dictionary<string, string>[] dictQnA = { new Dictionary<string, string>(),
                                                          new Dictionary<string, string>()};
         private readonly string[] strAlerts =
@@ -59,6 +60,8 @@ namespace ChemistryBasics
             Form test = new Test();
             test.Show();
             */
+
+
         }
         private void RecordInitialFontSizes(Control control)
         {
@@ -107,13 +110,79 @@ namespace ChemistryBasics
                     fs.Dispose();
                 }
                 string strSerializedQuestions = File.ReadAllText(questionPaths[i]);
-                Dictionary<string, string>? dict = 
+                Dictionary<string, string>? dict =
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedQuestions);
-                if(dict != null)
+                if (dict != null)
                 {
                     dictQnA[i] = dict;
                 }
-                
+
+            }
+        }
+
+        private void WriteQnAData()
+        {
+            string? serialized_element = Csv2SerializedDict(txtElementQnAs.Text.Trim());
+            if (serialized_element != null)
+            {
+                File.WriteAllText(questionPaths[0], serialized_element);
+            }
+
+            string? serialized_formula = Csv2SerializedDict(txtFormulaQnAs.Text.Trim());
+            if (serialized_formula != null)
+            {
+                File.WriteAllText(questionPaths[1], serialized_formula);
+            }
+        }
+
+        public static string? ReadSettingItem(string key)
+        {
+            if (!File.Exists(settingsPath))
+            {
+                FileStream fs = File.Create(settingsPath);
+                fs.Dispose();
+                return null;
+            }
+            string strSerializedSettings = File.ReadAllText(settingsPath);
+            Dictionary<string, string>? settings =
+                JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedSettings);
+
+            if(settings == null)
+            {
+                return null;
+            }
+            else if (!settings.ContainsKey(key))
+            {
+                return null;
+            }
+            else
+            {
+                return settings[key];
+            }
+
+        }
+
+        public static void WriteSettingItem(string key, string value)
+        {
+            if (!File.Exists(settingsPath))
+            {
+                FileStream fs = File.Create(settingsPath);
+                fs.Dispose();
+            }
+            string strSerializedSettings = File.ReadAllText(settingsPath);
+            Dictionary<string, string>? settings =
+                JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedSettings);
+
+            if (settings == null)
+            {
+                settings = new Dictionary<string, string>();
+            }
+            
+            settings[key] = value;
+            string? strNewSerializedSettings = JsonConvert.SerializeObject(settings);
+            if (strNewSerializedSettings != null)
+            {
+                File.WriteAllText(settingsPath, strNewSerializedSettings);
             }
         }
 
@@ -125,22 +194,25 @@ namespace ChemistryBasics
                 fs.Dispose();
             }
             string strSerializedRankings = File.ReadAllText(rankingsPaths[mode]);
-            SortedDictionary<string, string>? rankings = 
-                JsonConvert.DeserializeObject<SortedDictionary<string, string>>(strSerializedRankings);
+            Dictionary<string, string>? rankings =
+                JsonConvert.DeserializeObject<Dictionary<string, string>>(strSerializedRankings);
 
             if (rankings == null)
             {
-                rankings = new SortedDictionary<string, string>();
+                rankings = new Dictionary<string, string>();
             }
-            
-            rankings.Add(time, name);
-            string? strNewSerializedRankings = JsonConvert.SerializeObject(rankings);
 
-            if(strNewSerializedRankings != null)
+            if(!rankings.ContainsKey(name) || String.Compare(rankings[name], time) == 1)
             {
-                File.WriteAllText(rankingsPaths[mode], strNewSerializedRankings);
-            }
+                rankings[name] = time;
+                rankings = rankings.OrderBy(x => x.Value).ToDictionary();
+                string? strNewSerializedRankings = JsonConvert.SerializeObject(rankings);
 
+                if (strNewSerializedRankings != null)
+                {
+                    File.WriteAllText(rankingsPaths[mode], strNewSerializedRankings);
+                }
+            }
         }
 
         public void ClearActivePanels()
@@ -151,11 +223,11 @@ namespace ChemistryBasics
                 pnl.Dispose();
             }
             ActivePanels.Clear();
-            
+
             return;
         }
 
-        private string Dict2Csv(Dictionary<string, string>? dict)
+        private static string Dict2Csv(Dictionary<string, string>? dict)
         {
             if (dict == null)
             {
@@ -173,7 +245,7 @@ namespace ChemistryBasics
             return csv;
         }
 
-        private string? Csv2SerializedDict(string? csv)
+        private static string? Csv2SerializedDict(string? csv)
         {
             if (csv == null)
             {
@@ -211,6 +283,31 @@ namespace ChemistryBasics
             return JsonConvert.SerializeObject(dict);
         }
 
+        public static bool Authenticate()
+        {
+            string? correct_psd = ReadSettingItem("psd");
+            if (correct_psd == null)
+            {
+                correct_psd = "";
+            }
+
+            if(correct_psd == "")
+            {
+                return true;
+            }
+
+            PasswordDialog psddlg = new PasswordDialog(correct_psd);
+            psddlg.ShowDialog();
+            if(psddlg.DialogResult == DialogResult.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void TabButton_Click(object sender, EventArgs e)
         {
             ActiveGamePanel = null;
@@ -237,14 +334,9 @@ namespace ChemistryBasics
 
                     }
                 }
-                if (selected_item == 3)
-                {
-                    return;
-                }
-
+                
                 ReadQnAData();
                 ClearActivePanels();
-
 
                 if (selected_item == 0 || selected_item == 1)
                 {
@@ -294,6 +386,14 @@ namespace ChemistryBasics
                     prkspnl.Show();
 
                 }
+                else
+                {
+                    ReadQnAData();
+                    txtElementQnAs.Text = Dict2Csv(dictQnA[0]);
+                    btnElementSave.Enabled = false;
+                    txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
+                    btnFormulaSave.Enabled = false;
+                }
 
             }
         }
@@ -306,7 +406,7 @@ namespace ChemistryBasics
             {
                 if (dictQnA[prkspnl.SelectedMode].Count < InitSettingsPanel.intPerfectChallengeProblemCount)
                 {
-                    MessageBox.Show("问题总数不足" + InitSettingsPanel.intPerfectChallengeProblemCount.ToString() + 
+                    MessageBox.Show("问题总数不足" + InitSettingsPanel.intPerfectChallengeProblemCount.ToString() +
                             "。请于设置页面补充题库。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -335,9 +435,9 @@ namespace ChemistryBasics
                 return;
 
             int totalProblemCnt = ActiveInitPanel.TotalProblemCount;
-            if(totalProblemCnt == 0)
+            if (totalProblemCnt == 0)
             {
-                MessageBox.Show("问题总数不可为零。请于设置页面确认题库非空。", "提示", 
+                MessageBox.Show("问题总数不可为零。请于设置页面确认题库非空。", "提示",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -349,7 +449,7 @@ namespace ChemistryBasics
 
         private void GameInit(int totalProblemCnt)
         {
-            if(ActiveGamePanel == null && ActivePerfectGamePanel == null)
+            if (ActiveGamePanel == null && ActivePerfectGamePanel == null)
             {
                 return;
             }
@@ -370,10 +470,10 @@ namespace ChemistryBasics
                 ActiveGamePanel.QuestionString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Key;
                 ActiveGamePanel.CorrectAnswerString = dictQnA[QnAIndex].ElementAt(lstCurrentQuestionNums[0]).Value;
                 ActiveGamePanel.FocusOnTextBox();
-                
+
             }
 
-            else if(ActivePerfectGamePanel != null)
+            else if (ActivePerfectGamePanel != null)
             {
                 int QnAIndex = intGameStatus - 2;
                 while (colCurrentQuestionNums.Count != totalProblemCnt)
@@ -388,7 +488,7 @@ namespace ChemistryBasics
                 ActivePerfectGamePanel.FocusOnTextBox();
                 ActivePerfectGamePanel.TimerStart();
             }
-            
+
         }
 
         private void GamePanel_BtnSubmitClick(object? sender, EventArgs e)
@@ -448,7 +548,7 @@ namespace ChemistryBasics
         private void PerfectGamePanel_BtnSubmitClick(object? sender, EventArgs e)
         {
             int QnAIndex = intGameStatus - 2;
-            if(ActivePerfectGamePanel != null)
+            if (ActivePerfectGamePanel != null)
             {
                 if (ActivePerfectGamePanel.IsAnswerCorrect())
                 {
@@ -468,7 +568,7 @@ namespace ChemistryBasics
 
                         RecordDialog rdlg = new RecordDialog();
                         rdlg.ShowDialog();
-                        if(rdlg.DialogResult == DialogResult.OK)
+                        if (rdlg.DialogResult == DialogResult.OK)
                         {
                             string strTimeUsed = tpTimeUsed.Minutes.ToString("D2") + ":" + tpTimeUsed.Seconds.ToString("D2")
                                 + "." + tpTimeUsed.Milliseconds.ToString("D3");
@@ -508,7 +608,7 @@ namespace ChemistryBasics
                 MessageBox.Show("当前没有正在运行的PerfectChallengeGamePanel.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        } 
+        }
 
         private void txtElementQnAs_TextChanged(object sender, EventArgs e)
         {
@@ -522,27 +622,24 @@ namespace ChemistryBasics
 
         private void btnElementSave_Click(object sender, EventArgs e)
         {
-            string? serialized = Csv2SerializedDict(txtElementQnAs.Text.Trim());
-            if (serialized != null)
+            if (Authenticate())
             {
-                File.WriteAllText(questionPaths[0], serialized);
-                ReadQnAData();
-                txtElementQnAs.Text = Dict2Csv(dictQnA[0]);
-                btnElementSave.Enabled = false;
+                WriteQnAData();
             }
-
+            ReadQnAData();
+            txtElementQnAs.Text = Dict2Csv(dictQnA[0]);
+            btnElementSave.Enabled = false;
         }
 
         private void btnFormulaSave_Click(object sender, EventArgs e)
         {
-            string? serialized = Csv2SerializedDict(txtFormulaQnAs.Text.Trim());
-            if (serialized != null)
+            if (Authenticate())
             {
-                File.WriteAllText(questionPaths[1], serialized);
-                ReadQnAData();
-                txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
-                btnFormulaSave.Enabled = false;
+                WriteQnAData();
             }
+            ReadQnAData();
+            txtFormulaQnAs.Text = Dict2Csv(dictQnA[1]);
+            btnFormulaSave.Enabled = false;
         }
 
         private void main_Resize(object sender, EventArgs e)
@@ -550,6 +647,26 @@ namespace ChemistryBasics
             ScaleFonts(this);
         }
 
+        private void btnPasswordConfirm_Click(object sender, EventArgs e)
+        {
+            string? correct_psd = ReadSettingItem("psd");
+            if (correct_psd == null)
+            {
+                correct_psd = "";
+            }
+
+            if(txtOldPassword.Text == correct_psd)
+            {
+                WriteSettingItem("psd", txtNewPassword.Text);
+                MessageBox.Show("管理员密码修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("旧密码错误，管理员密码修改失败。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            txtNewPassword.Text = "";
+            txtOldPassword.Text = "";
+        }
     }
 
 
