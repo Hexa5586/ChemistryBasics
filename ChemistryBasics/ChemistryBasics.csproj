@@ -18,7 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="calibrib.ttf" />
+    <None Remove="unispace bd.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="calibrib.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="favicon.ico" />
+    <Content Include="unispace bd.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -50,9 +61,6 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="unispace bd.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

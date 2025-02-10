@@ -29,6 +29,7 @@ namespace ChemistryBasics
         public PerfectGamePanel(int mode = 0)
         {
             InitializeComponent();
+            
             this.Mode = mode;
             try
             {

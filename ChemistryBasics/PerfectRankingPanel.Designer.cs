@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             tblpnlRanks = new TableLayoutPanel();
             btnStart = new Sunny.UI.UIButton();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            tblpnlTitle = new TableLayoutPanel();
             lbl2 = new Label();
             btnRankingsClear = new Sunny.UI.UIButton();
             tblpnlMode = new TableLayoutPanel();
@@ -46,7 +46,7 @@
             dcolName = new DataGridViewTextBoxColumn();
             dcolTime = new DataGridViewTextBoxColumn();
             tblpnlRanks.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            tblpnlTitle.SuspendLayout();
             tblpnlMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataRanks).BeginInit();
             SuspendLayout();
@@ -56,7 +56,7 @@
             tblpnlRanks.ColumnCount = 1;
             tblpnlRanks.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tblpnlRanks.Controls.Add(btnStart, 0, 3);
-            tblpnlRanks.Controls.Add(tableLayoutPanel1, 0, 0);
+            tblpnlRanks.Controls.Add(tblpnlTitle, 0, 0);
             tblpnlRanks.Controls.Add(tblpnlMode, 0, 2);
             tblpnlRanks.Controls.Add(dataRanks, 0, 1);
             tblpnlRanks.Dock = DockStyle.Fill;
@@ -83,20 +83,20 @@
             btnStart.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
             btnStart.Click += btnStart_Click;
             // 
-            // tableLayoutPanel1
+            // tblpnlTitle
             // 
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Controls.Add(lbl2, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnRankingsClear, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(3, 3);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(915, 64);
-            tableLayoutPanel1.TabIndex = 7;
+            tblpnlTitle.ColumnCount = 2;
+            tblpnlTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tblpnlTitle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tblpnlTitle.Controls.Add(lbl2, 0, 0);
+            tblpnlTitle.Controls.Add(btnRankingsClear, 1, 0);
+            tblpnlTitle.Dock = DockStyle.Fill;
+            tblpnlTitle.Location = new Point(3, 3);
+            tblpnlTitle.Name = "tblpnlTitle";
+            tblpnlTitle.RowCount = 1;
+            tblpnlTitle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tblpnlTitle.Size = new Size(915, 64);
+            tblpnlTitle.TabIndex = 7;
             // 
             // lbl2
             // 
@@ -179,29 +179,29 @@
             dataRanks.AllowUserToAddRows = false;
             dataRanks.AllowUserToDeleteRows = false;
             dataRanks.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(235, 243, 255);
-            dataRanks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(235, 243, 255);
+            dataRanks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             dataRanks.BackgroundColor = Color.White;
             dataRanks.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(80, 160, 255);
-            dataGridViewCellStyle2.Font = new Font("微软雅黑", 12F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dataRanks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle7.Font = new Font("微软雅黑", 12F);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataRanks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dataRanks.ColumnHeadersHeight = 50;
             dataRanks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataRanks.Columns.AddRange(new DataGridViewColumn[] { dcolRank, dcolName, dcolTime });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Window;
-            dataGridViewCellStyle3.Font = new Font("微软雅黑", 24F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataRanks.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("微软雅黑", 24F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dataRanks.DefaultCellStyle = dataGridViewCellStyle8;
             dataRanks.Dock = DockStyle.Fill;
             dataRanks.Enabled = false;
             dataRanks.EnableHeadersVisualStyles = false;
@@ -211,18 +211,18 @@
             dataRanks.MultiSelect = false;
             dataRanks.Name = "dataRanks";
             dataRanks.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(235, 243, 255);
-            dataGridViewCellStyle4.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(48, 48, 48);
-            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(80, 160, 255);
-            dataGridViewCellStyle4.SelectionForeColor = Color.White;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataRanks.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(235, 243, 255);
+            dataGridViewCellStyle9.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(80, 160, 255);
+            dataGridViewCellStyle9.SelectionForeColor = Color.White;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            dataRanks.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             dataRanks.RowHeadersWidth = 62;
-            dataGridViewCellStyle5.BackColor = Color.White;
-            dataGridViewCellStyle5.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            dataRanks.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.BackColor = Color.White;
+            dataGridViewCellStyle10.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            dataRanks.RowsDefaultCellStyle = dataGridViewCellStyle10;
             dataRanks.RowTemplate.DefaultCellStyle.Font = new Font("微软雅黑", 16F);
             dataRanks.RowTemplate.Height = 50;
             dataRanks.ScrollMode = Sunny.UI.UIDataGridView.UIDataGridViewScrollMode.Page;
@@ -265,8 +265,8 @@
             Size = new Size(921, 902);
             Load += PerfectRankingPanel_Load;
             tblpnlRanks.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            tblpnlTitle.ResumeLayout(false);
+            tblpnlTitle.PerformLayout();
             tblpnlMode.ResumeLayout(false);
             tblpnlMode.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataRanks).EndInit();
@@ -284,7 +284,7 @@
         private Label lbl1;
         private Sunny.UI.UIComboBox cmbMode;
         private Sunny.UI.UIButton btnStart;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tblpnlTitle;
         private Label lbl2;
         private Sunny.UI.UIButton btnRankingsClear;
     }

@@ -34,6 +34,11 @@ namespace ChemistryBasics
             List<Tuple<string, string, string>>? errors = null)
         {
             InitializeComponent();
+            MainWindow? m = Application.OpenForms[0] as MainWindow;
+            if (m != null)
+            {
+                this.Size = m.PanelWorkingArea;
+            }
 
             try
             {

@@ -192,7 +192,7 @@
             txtQuestion.ReadOnly = true;
             txtQuestion.RectSides = ToolStripStatusLabelBorderSides.None;
             txtQuestion.ShowText = false;
-            txtQuestion.Size = new Size(907, 220);
+            txtQuestion.Size = new Size(907, 222);
             txtQuestion.TabIndex = 2;
             txtQuestion.Text = "QUESTION";
             txtQuestion.TextAlignment = ContentAlignment.MiddleCenter;

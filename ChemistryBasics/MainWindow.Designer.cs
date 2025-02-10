@@ -133,7 +133,7 @@
             tbpFormulaMode.Location = new Point(4, 36);
             tbpFormulaMode.Name = "tbpFormulaMode";
             tbpFormulaMode.Padding = new Padding(3);
-            tbpFormulaMode.Size = new Size(921, 902);
+            tbpFormulaMode.Size = new Size(1108, 1102);
             tbpFormulaMode.TabIndex = 1;
             tbpFormulaMode.Text = "化学式";
             tbpFormulaMode.UseVisualStyleBackColor = true;
@@ -142,7 +142,7 @@
             // 
             tbpPerfectChallenge.Location = new Point(4, 36);
             tbpPerfectChallenge.Name = "tbpPerfectChallenge";
-            tbpPerfectChallenge.Size = new Size(921, 902);
+            tbpPerfectChallenge.Size = new Size(1108, 1102);
             tbpPerfectChallenge.TabIndex = 3;
             tbpPerfectChallenge.Text = "完美挑战";
             tbpPerfectChallenge.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@
             tbpSettings.Location = new Point(4, 36);
             tbpSettings.Name = "tbpSettings";
             tbpSettings.Padding = new Padding(3);
-            tbpSettings.Size = new Size(921, 902);
+            tbpSettings.Size = new Size(1108, 1102);
             tbpSettings.TabIndex = 2;
             tbpSettings.Text = "设置";
             tbpSettings.UseVisualStyleBackColor = true;
@@ -173,7 +173,7 @@
             tbctrlSettings.MenuStyle = Sunny.UI.UIMenuStyle.Custom;
             tbctrlSettings.Name = "tbctrlSettings";
             tbctrlSettings.SelectedIndex = 0;
-            tbctrlSettings.Size = new Size(915, 896);
+            tbctrlSettings.Size = new Size(1102, 1096);
             tbctrlSettings.SizeMode = TabSizeMode.Fixed;
             tbctrlSettings.TabBackColor = Color.FromArgb(243, 249, 255);
             tbctrlSettings.TabIndex = 0;
@@ -190,7 +190,7 @@
             tbpElementQnAs.Controls.Add(tblpnlElementQnAs);
             tbpElementQnAs.Location = new Point(0, 40);
             tbpElementQnAs.Name = "tbpElementQnAs";
-            tbpElementQnAs.Size = new Size(915, 856);
+            tbpElementQnAs.Size = new Size(1102, 1056);
             tbpElementQnAs.TabIndex = 0;
             tbpElementQnAs.Text = "元素符号题库设定";
             // 
@@ -208,7 +208,7 @@
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblpnlElementQnAs.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tblpnlElementQnAs.Size = new Size(915, 856);
+            tblpnlElementQnAs.Size = new Size(1102, 1056);
             tblpnlElementQnAs.TabIndex = 0;
             // 
             // lbl1
@@ -218,7 +218,7 @@
             lbl1.Font = new Font("微软雅黑", 12F);
             lbl1.Location = new Point(3, 0);
             lbl1.Name = "lbl1";
-            lbl1.Size = new Size(909, 50);
+            lbl1.Size = new Size(1096, 50);
             lbl1.TabIndex = 0;
             lbl1.Text = "元素符号题库设置（一行为一组，先输入问题后输入答案，用逗号分割）";
             lbl1.TextAlign = ContentAlignment.MiddleLeft;
@@ -236,7 +236,7 @@
             txtElementQnAs.ScrollBarWidth = 5;
             txtElementQnAs.ShowScrollBar = true;
             txtElementQnAs.ShowText = false;
-            txtElementQnAs.Size = new Size(907, 726);
+            txtElementQnAs.Size = new Size(1094, 926);
             txtElementQnAs.TabIndex = 1;
             txtElementQnAs.TextAlignment = ContentAlignment.MiddleLeft;
             txtElementQnAs.Watermark = "";
@@ -247,10 +247,10 @@
             btnElementSave.Dock = DockStyle.Fill;
             btnElementSave.Enabled = false;
             btnElementSave.Font = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
-            btnElementSave.Location = new Point(3, 789);
+            btnElementSave.Location = new Point(3, 989);
             btnElementSave.MinimumSize = new Size(1, 1);
             btnElementSave.Name = "btnElementSave";
-            btnElementSave.Size = new Size(909, 64);
+            btnElementSave.Size = new Size(1096, 64);
             btnElementSave.TabIndex = 2;
             btnElementSave.Text = "保存更改";
             btnElementSave.TipsFont = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
@@ -475,7 +475,7 @@
             tbpAbout.Controls.Add(tableLayoutPanel3);
             tbpAbout.Location = new Point(0, 40);
             tbpAbout.Name = "tbpAbout";
-            tbpAbout.Size = new Size(915, 856);
+            tbpAbout.Size = new Size(200, 60);
             tbpAbout.TabIndex = 3;
             tbpAbout.Text = "关于";
             tbpAbout.UseVisualStyleBackColor = true;
@@ -499,16 +499,16 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
-            tableLayoutPanel3.Size = new Size(915, 856);
+            tableLayoutPanel3.Size = new Size(200, 60);
             tableLayoutPanel3.TabIndex = 1;
             // 
             // picIcon
             // 
             picIcon.Dock = DockStyle.Fill;
             picIcon.Image = (Image)resources.GetObject("picIcon.Image");
-            picIcon.Location = new Point(133, 3);
+            picIcon.Location = new Point(31, 3);
             picIcon.Name = "picIcon";
-            picIcon.Size = new Size(647, 208);
+            picIcon.Size = new Size(136, 9);
             picIcon.SizeMode = PictureBoxSizeMode.Zoom;
             picIcon.TabIndex = 0;
             picIcon.TabStop = false;
@@ -518,9 +518,9 @@
             lbl6.AutoSize = true;
             lbl6.Dock = DockStyle.Fill;
             lbl6.Font = new Font("微软雅黑", 12F);
-            lbl6.Location = new Point(133, 214);
+            lbl6.Location = new Point(31, 15);
             lbl6.Name = "lbl6";
-            lbl6.Size = new Size(647, 642);
+            lbl6.Size = new Size(136, 45);
             lbl6.TabIndex = 1;
             lbl6.Text = "化学符号默写大比拼\r\nBeta 1.1\r\nPowered By Microsoft .NET Framework 8.0\r\n";
             lbl6.TextAlign = ContentAlignment.TopCenter;

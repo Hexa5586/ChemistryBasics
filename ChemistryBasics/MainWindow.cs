@@ -227,6 +227,14 @@ namespace ChemistryBasics
             return;
         }
 
+        public Size PanelWorkingArea
+        {
+            get
+            {
+                return this.tbpElementMode.Size;
+            }
+        }
+
         private static string Dict2Csv(Dictionary<string, string>? dict)
         {
             if (dict == null)

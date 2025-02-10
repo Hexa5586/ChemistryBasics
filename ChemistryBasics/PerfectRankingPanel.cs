@@ -20,6 +20,7 @@ namespace ChemistryBasics
         public PerfectRankingPanel()
         {
             InitializeComponent();
+            
         }
 
         private void btnStart_Click(object sender, EventArgs e)

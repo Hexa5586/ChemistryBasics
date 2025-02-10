@@ -21,6 +21,7 @@ namespace ChemistryBasics
         public InitSettingsPanel(int mode)
         {
             InitializeComponent();
+            
             lblMode.Text = strModeNames[mode];
             intMode = mode;
             if (mode == 2 || mode == 3)
